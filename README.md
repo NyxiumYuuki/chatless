@@ -18,3 +18,10 @@ Premier palier:
 Second palier:
 - Le chat fonctionne de manière active. Les utilisateurs sont connectés et reçoivent le message directement dès qu’il est posté.
 
+Le but du projet est de fournir un service de forum rudimentaire:
+Une interface utilisateur en web
+Les utilisateurs peuvent s'enregistrer/se connecter/se déconnecter/changer leur mot de passe
+Les utilisateurs peuvent créer un sujet
+On pourra poster et répondre à un message sur n’importe lequel des sujets du forum.
+Donner les liste des utilisateurs inscrits/connectés
+Il n’est pas requis de gestion des droits utilisateur, cependant un utilisateur ne peut pas changer les réglages d’un autres
