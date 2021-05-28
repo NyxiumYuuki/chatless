@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth/auth.service";
 
@@ -9,7 +8,6 @@ import {AuthService} from "../services/auth/auth.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
 
   login = '';
   password = '';
@@ -27,7 +25,8 @@ export class LoginComponent implements OnInit {
     this.auth.sendAuthentication(this.login, this.password).subscribe(data => {
       this.auth.finalizeAuthentication(data);
       if (this.auth.islog === true) {
-        this.router.navigateByUrl('/private');
+        sessionStorage.setItem('login', this.login);
+        this.router.navigateByUrl('/general');
       } else {
         this.errorMessage = data.data.reason;
         console.log(this.errorMessage);

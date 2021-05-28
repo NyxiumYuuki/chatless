@@ -1,11 +1,12 @@
 const sessionJWT = require ('jsonwebtoken');
 const fs = require ('fs');
 
+
 // renvoie un nouveau token JWT
-function createSessionJWT (userId) {
+function createSessionJWT (username) {
     // ci-dessous, on met en place le cookie de session JWT :
     // 1/ on recupere notre clef privee
-    const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
+    const RSA_PRIVATE_KEY = fs.readFileSync('../keys/jwtRS256.key');
 
     // 2/ on signe un token JWT. Le payload est l'identifiant de
     // l'utilisateur ainsi qu'une date d'expiration à mi-parcours :
@@ -18,7 +19,7 @@ function createSessionJWT (userId) {
     // session.
     const jwtToken = sessionJWT.sign(
         {
-            userId: userId,
+            username: username,
             midExp: Math.floor(Date.now() / 1000) + 1800 // validité: 30mn
         },
         RSA_PRIVATE_KEY,
@@ -40,14 +41,15 @@ function createSessionCookie(req, res, payload) {
     // midExp, alors le cookie est encore valide et on peut le renvoyer. Sinon,
     // on doit recalculer un nouveau cookie.
     let jwtToken = '';
-    if ((typeof payload.userId !== 'undefined') && 
+    if ((typeof payload.username !== 'undefined') &&
         (typeof payload.midExp !== 'undefined') &&
         (Math.floor(Date.now() / 1000) <= payload.midExp)) {
-        jwtToken = req.cookies.SESSIONID;
+        jwtToken = req.headers.cookie;
     }
     else {
-        // on crée un nouveau cookie
-        jwtToken = createSessionJWT(payload.userId);
+        // on crée
+        // un nouveau cookie
+        jwtToken = createSessionJWT(payload.username);
     }
 
     // on renvoie le cookie au client
@@ -63,14 +65,13 @@ module.exports.createSessionCookie = createSessionCookie;
 function decodeSessionCookie(req) {
     // si l'on n'a pas de cookie de session, on renvoie une session avec vide,
     // avec juste un userId à -1
-    console.log(req.cookies);
-    if (typeof req.cookies.SESSIONID === 'undefined') {
-        return { userId: -1 };
-    }
-    const sessionid = req.cookies.SESSIONID;
 
+    if (typeof req.headers.cookie === 'undefined') {
+        return { username: -1 };
+    }
+    const sessionid = req.headers.cookie.replace('SESSIONID=','');
     // on lit la clef publique
-    const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
+    const RSA_PUBLIC_KEY = fs.readFileSync('../keys/jwtRS256.key.pub');
 
     // on récupère les données du cookie
     try {
@@ -81,7 +82,7 @@ function decodeSessionCookie(req) {
         return token;
     }
     catch (err) {
-        return {userId: -1};
+        return {username: err};
     }
 }
 module.exports.decodeSessionCookie = decodeSessionCookie;

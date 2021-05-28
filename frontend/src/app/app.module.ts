@@ -2,24 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { GeneralComponent } from './general/general.component';
-import { PrivateComponent } from './private/private.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    GeneralComponent,
-    PrivateComponent,
-    NavbarComponent
+    GeneralComponent
   ],
   imports: [
     BrowserModule,
@@ -27,9 +21,9 @@ import {CommonModule} from "@angular/common";
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

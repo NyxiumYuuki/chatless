@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ChatService} from "../services/chat/chat.service";
-import {AuthService} from "../services/auth/auth.service";
-import {MessageService} from "../services/message/message.service";
-import {MatTableDataSource} from "@angular/material/table";
+import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {ChatInfo, ChatService} from "../services/chat/chat.service";
+import {environment} from "../../environments/environment";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-general',
@@ -10,123 +9,42 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
-  dataSource = new MatTableDataSource<userList>();
-  // @ts-ignore
-  public user:String;
-  // @ts-ignore
-  public room:String;
-  // @ts-ignore
-  public messageText: string;
-  messageArray:Array<{user:String,message:String}> = [];
-  private storageArray = [];
+
+  private username = sessionStorage.getItem('login');
+  private room = 'general';
+  public msg = '';
 
   // @ts-ignore
-  public showScreen: boolean;
-
-  // @ts-ignore
-  public password: string;
-
-  // @ts-ignore
-  public selectedUser;
+  @ViewChild('ulMessages') ulMsg: ElementRef;
 
 
+  constructor(private chatservice: ChatService, private pipe: DatePipe) {}
 
-  constructor(private Auth: AuthService,
-              private chatService: ChatService,
-              private MS: MessageService
-  ) {
-
-
-    this.chatService.newUserJoined()
-      .subscribe(data=> this.messageArray.push(data));
-
-
-    this.chatService.userLeftRoom()
-      .subscribe(data=>this.messageArray.push(data));
-
-    this.chatService.getMessage()
-      .subscribe(data=>this.messageArray.push(data));
-  }
-  ngOnInit(): void {
-    this.MS.sendMessage('Cours/CoursGet', {}).subscribe( send => {
-      console.log(send.data);
-      this.dataSource.data = send.data as userList[];
-
+  ngOnInit() {
+    console.log('General working');
+    this.chatservice.setUrl(environment.urlCG);
+    this.chatservice.setRoom(this.room);
+    this.chatservice.onNewMessage(this.room).subscribe((infos: ChatInfo[]) => {
+      for(let data of infos){
+        if(data !== undefined && data.date !== undefined){
+          if(data.username === 'Server'){
+            this.ulMsg.nativeElement.insertAdjacentHTML('beforeend', '<li><span class="text-danger">'+data.message+'</span></li>');
+          }
+          else{
+            this.ulMsg.nativeElement.insertAdjacentHTML('beforeend','<li><span class="text-primary">['+this.pipe.transform(data.date, 'dd/MM/yyyy HH:MM:ss')+'] </span><span class="text-success">'+data.username+' </span>:<span class="text-secondary"> '+data.message+'</span></li>');
+          }
+        }
+      }
+      window.scrollTo(0, document.body.scrollHeight);
     });
-    // this.chatService.getMessage()
-    //   .subscribe((data: {user: string, message: string}) => {
-    //     this.messageArray.push(data);
-    //     if (this.room) {
-    //       setTimeout( () => {
-    //         this.storageArray = this.chatService.getStorage();
-    //         //@ts-ignore
-    //         const storeIndex = this.storageArray.findIndex((storage) => storage.room === this.room);
-    //         //@ts-ignore
-    //         this.messageArray = this.storageArray[storeIndex].chats;
-    //       }, 500);
-    //     }
-    //   });
-
   }
 
-  // selectUserHandler(password: string): void {
-  //   //this.selectedUser = this.userList.find(user => user.password === password);
-  //   this.room = this.selectedUser.room[this.currentUser.id];
-  //   this.messageArray = [];
-  //
-  //   this.storageArray = this.chatService.getStorage();
-  //   // @ts-ignore
-  //   const storeIndex = this.storageArray.findIndex((storage) => storage.room === this.room);
-  //
-  //   if (storeIndex > -1) {
-  //     // @ts-ignore
-  //     this.messageArray = this.storageArray[storeIndex].chats;
-  //   }
-  //
-  //   // @ts-ignore
-  //   this.join(this.currentUser.name, this.room);
-  // }
-
-  join(username: string, room: string): void {
-    this.chatService.joinRoom({user: username, room: room});
+  sendButtonClick(){
+    console.log('Button working');
+    if(this.msg && this.username){
+      this.chatservice.sendMessage(this.username, this.room, this.msg);
+      console.log(this.username, this.room, this.msg);
+      this.msg = '';
+    }
   }
-
-  sendMessage()
-  {
-    this.chatService.sendMessage({user:this.user, room:this.room, message:this.messageText});
-
-    // this.storageArray = this.chatService.getStorage();
-    // // @ts-ignore
-    // const storeIndex = this.storageArray.findIndex((storage) => storage.room === this.room);
-    //
-    // if (storeIndex > -1) {
-    //   // @ts-ignore
-    //   this.storageArray[storeIndex].chats.push({
-    //     user: this.currentUser.name,
-    //     message: this.messageText
-    //   })
-    // } else {
-    //   const updateStorage = {
-    //     room: this.room,
-    //     chats: [{
-    //       user: this.currentUser.name,
-    //       message: this.messageText
-    //     }]
-    //   };
-    //   // @ts-ignore
-    //   this.storageArray.push(updateStorage);
-    // }
-    // this.chatService.setStorage(this.storageArray);
-    // this.messageText = '';
-  }
-
-
-  leave(){
-    this.chatService.leaveRoom({login:this.dataSource.data, room:this.room});
-  }
-
-
-}
-export interface userList {
-  login: string;
 }
