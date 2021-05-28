@@ -8,8 +8,11 @@ async function checkLogin (req,res) {
         return sendError(res, 'Vous n\'avez pas envoyé le champ password');
     
     const result = await auth.authenticate(req, res);
-    if (result){
-        return sendMessage(res, result);
+    if (result > 0){
+        return sendMessage(res, {
+            id: result,
+            username: req.body.login
+        });
     }
     else{
         return sendError(res, 'Invalid username or password');

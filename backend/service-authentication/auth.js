@@ -32,11 +32,11 @@ async function authenticate(req, res) {
 
     const userList = await queries.checkLoginQuery(login, password);
     if (userList !== undefined && userList[0] !== undefined && userList[0].idUtilisateur > 0){
-        setSessionCookie (req, res, { userId: userList[0].idUtilisateur });
-        // return userList[0].idUtilisateur;
-        return getUserId(getSession(req));
+        console.log("check");
+        setSessionCookie (req, res, { username: login});
+        return userList[0].idUtilisateur;
     } else {
-        setSessionCookie (req, res, {userId: -1});
+        setSessionCookie (req, res, {username: -1});
         return -1;
     }
 
