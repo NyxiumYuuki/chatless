@@ -15,17 +15,22 @@ export interface ChatInfo {
 })
 export class ChatService {
 
-  private socket: Socket;
+  private socket: Socket | undefined;
   private url: string;
+  private room: string;
 
   constructor() {
     this.url = '';
-    this.socket = io();
+    this.room = '';
   }
 
   setUrl(url: string){
     this.url = url;
     this.setSocket();
+  }
+
+  setRoom(room: string){
+    this.room = room;
   }
 
   setSocket(){
@@ -35,6 +40,7 @@ export class ChatService {
   }
 
   sendMessage(username: string | null, room: string, message: string) {
+    // @ts-ignore
     this.socket.emit(room, {
       username: username,
       date: new Date(),
@@ -43,10 +49,12 @@ export class ChatService {
     });
   }
 
-  onNewMessage() {
+  onNewMessage(room: string): Observable<ChatInfo[]> {
     return new Observable(observer => {
-      this.socket.on('general', infos => {
-        observer.next(infos);
+      // @ts-ignore
+      this.socket.on(room, (data: ChatInfo[]) => {
+        console.log(data);
+        observer.next(data);
       });
     });
   }
