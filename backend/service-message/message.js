@@ -3,11 +3,11 @@
 // data est un objet JavaScript. Globalement, cette fonction est
 // équivalente au "echo json_encode(data);" que vous utilisiez en PHP
 function sendMessage (res, data) {
-    res.json ({ status: 'ok', data: data });
+    res.send ({ status: 'ok', data: data });
 }
 
 function sendError (res, reason) {
-    res.json ({ status: 'error', data: {reason: reason }});
+    res.send ({ status: 'error', data: {reason: reason }});
 }
 
 module.exports = { sendMessage, sendError };
