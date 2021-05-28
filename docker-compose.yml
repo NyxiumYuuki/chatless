@@ -1,82 +1,51 @@
-version: '3.7'
-networks:
-  net:
+version: '3.8'
 
 services:
 
-  frontend:
-    image: frontend
-    environment:
-      SERVICE_ADRESS: frontend
-      SERVICE_PORT: 4200
-    ports:
-      - 4200:4200
-    networks:
-      - net
-
   service-authentication:
-    image: service-authentication
+    container_name: service-authentication
+    build: backend/service-authentication
+    command: node server.js
+    volumes:
+      - backend/service-authentication
+      - backend/service-authentication/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb-authentication
+    links:
+      - mongodb-authentication
     environment:
-      SERVICE_ADRESS: service-authentication
-      SERVICE_PORT: 3000
-      ports:
-        - 3000:3000
-    networks:
-      - net
+      NODE_ENV: development
 
   service-message:
-    image: service-message
+    container_name: service-message
+    build: backend/service-message
+    command: node server.js
+    volumes:
+      - backend/service-message
+      - backend/service-message/node_modules
+    ports:
+      - 3001:3000
+    depends_on:
+      - mongodb-message
+    links:
+      - mongodb-message
     environment:
-      SERVICE_ADRESS: service-message
-      SERVICE_PORT: 3000
-      ports:
-        - 3001:3000
-    networks:
-      - net
-  service-notification:
-    image: service-notification
-    environment:
-      SERVICE_ADRESS: service-notification
-      SERVICE_PORT: 3000
-      ports:
-        - 3002:3000
-    networks:
-      - net
-
-  service-privateroom:
-    image: service-privateroom
-    environment:
-      SERVICE_ADRESS: service-privateroom
-      SERVICE_PORT: 3000
-      ports:
-        - 3003:3000
-    networks:
-      - net
+      NODE_ENV: development
 
   mongodb-authentication:
     image: mongo
-    networks:
-      - net
+    container_name: mongodb-authentication
+    volumes:
+      - ./backend/service-authentication/database:/data/db
     ports:
-      -  27017:27017
+      - 27017:27017
 
   mongodb-message:
     image: mongo
-    networks:
-      - net
+    container_name: mongodb-message
+    volumes:
+      - ./backend/service-message/database:/data/db
     ports:
       - 27020:27017
-
-  mongodb-notification:
-    image: mongo
-    networks:
-      - net
-    ports:
-      - 27021:27017
-
-  mongodb-privateroom:
-    image: mongo
-    networks:
-      - net
-    ports:
-      - 27022:27017
