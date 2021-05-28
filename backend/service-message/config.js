@@ -1,6 +1,6 @@
 const config = {
     mongodbDatabase: 'chat',
-    mongodbHost:     'mongodb://localhost:27020/',
+    mongodbHost:     'mongodb://mongodb-message:27020/',
     charset:       'utf8',
     mongodbLogin:  '',
     mongodbPassword: '',
