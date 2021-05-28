@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlCL: 'http://service-authentication:3000'
+  urlCL: 'http://127.0.0.1:3000'
 };
 
 /*
