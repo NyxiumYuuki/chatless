@@ -2,8 +2,12 @@ const config = require('./config');
 const mongoose = require( 'mongoose' );
 const url = config.mongodbHost;
 
-mongoose.connect(url,({useNewUrlParser: true, useUnifiedTopology: true}));
-console.log(mongoose.connection.readyState);
+mongoose.connect(url,({useNewUrlParser: true, useUnifiedTopology: true})).then( function(){
+    console.log('mongodb-message connected '+mongoose.connection.readyState);
+}).catch(function(err){
+    console.log('error : '+err);
+});
+
 
 const schemaMessage = mongoose.Schema({
     username:{
