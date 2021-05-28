@@ -16,14 +16,19 @@ const mongoConnect = require('./mongodbConnect');
 
 mongoConnect.connectToServer(function( err, client ) {
     if (err) console.log(err);
-
     const checkLogin = require('./checkLogin');
+    const register = require('./register');
+    const queries = require('./mongodbQueries');
+
+    queries.register('khai','test');
+    queries.register('wilfried','test');
+    queries.register('yuki','test');
 
     app.post('/checkLogin', (req, res) => {
         checkLogin(req,res);
     });
 
-    const register = require('./register');
+
     app.post('/register', (req, res) => {
         register(req,res);
     });

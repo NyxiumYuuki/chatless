@@ -16,14 +16,13 @@ module.exports.checkLoginQuery = checkLoginQuery;
 function register(login, password){
     // INSERT INTO users(login, password)
     return new Promise((resolve, reject) => {
-        mongoDB.collection(config.mongodbUtilisateurs).insertOne(
-            {
-                login: login,
-                password: password
-            },{},function(err,res){
+        mongoDB.collection(config.mongodbUtilisateurs).updateOne(
+            {'login': login},
+            {$set: { 'login': login, 'password': password}},
+            {upsert:true},function(err,res){
                 console.log(res);
                 if(res !== undefined){
-                    resolve(res.insertedCount === 1);
+                    resolve(res.upsertedCount === 1);
                 }
             });
     });

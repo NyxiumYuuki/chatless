@@ -10,6 +10,7 @@ async function register(req,res) {
 
     const register = await queries.register(req.body.login, req.body.password);
     if (register){
+        console.log('Register : '+req.body.login);
         return sendMessage(res, null);
     }
     else{
