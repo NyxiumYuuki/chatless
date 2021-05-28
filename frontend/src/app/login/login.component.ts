@@ -11,41 +11,30 @@ import {AuthService} from "../services/auth/auth.service";
 export class LoginComponent implements OnInit {
 
 
-  public password = '';
-  public name = '';
+  login = '';
+  password = '';
+  errorMessage = '';
 
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {
-
-
-  }
+  constructor(private auth: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  showCredentials(): void {
+    console.log('Login :', this.login);
+    console.log('Password :', this.password);
+    this.auth.sendAuthentication(this.login, this.password).subscribe(data => {
+      this.auth.finalizeAuthentication(data);
+      if (this.auth.islog === true) {
+        this.router.navigateByUrl('/private');
+      } else {
+        this.errorMessage = data.data.reason;
+        console.log(this.errorMessage);
+      }
+    });
 
-  login() : void {
-    console.log(this.name, this.password);
-    if (this.auth.sendAuthentication(this.name, this.password) === true){
-      this.auth.sendAuth(this.password);
-      this.router.navigateByUrl('/private');
-    } else {
-      console.log("error");
-    }
   }
-
-  login2() : void {
-    console.log(this.name, this.password);
-    if (this.auth.sendAuthentication(this.name, this.password) === true){
-      this.auth.sendAuth(this.password);
-      this.router.navigateByUrl('/general');
-    } else {
-      console.log("error");
-    }
-  }
-
 }
 
 

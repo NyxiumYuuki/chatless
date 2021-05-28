@@ -5,14 +5,12 @@
 
       <div class="user-list-card">
         <div class="user-card"
-             [ngClass]="{'active' : user?.password === selectedUser?.password}"
-             *ngFor="let user of userList"
-             (click)="selectUserHandler(user.password)"
+
         >
           <!---->
 
           <img src="../../assets/image/user.png" height="25" width="25"/>
-          <p class="username">{{user?.name}}</p>
+          <p class="username"></p>
 
         </div>
       </div>
@@ -28,7 +26,7 @@
 
           <div class="chat-body">
             <div *ngFor="let item of messageArray"
-                 [ngClass]="{'same-user' : item?.user === currentUser?.name}"
+
             >
               <!---->
 
