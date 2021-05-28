@@ -6,7 +6,9 @@ let db;
 module.exports = {
     connectToServer: function( callback ) {
         MongoClient.connect( uri,  { useNewUrlParser: true,  useUnifiedTopology: true }, function( err, client ) {
-            console.log('mongodb-authentication-checkConnection'+client.isConnected());
+            if(err) throw err;
+            console.log('mongodb-authentication-checkConnection'+client===undefined);
+            if (client !== undefined) console.log(client.isConnected());
             db  = client.db(config.mongodbDatabase);
 
             return callback( err );
