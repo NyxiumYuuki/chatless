@@ -16,21 +16,26 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 app.use(cookieParser());
-
-
-app.get('/', (req, res) => {
-    const session = auth.getSession(req);
+io.use(function(socket, next){
+    const session = auth.getSession(socket.request);
     const getUsername = auth.getUsername(session);
     if (getUsername === -1) {
         //sendError(res, 'not authenticated');
     }
-    //auth.setSessionCookie(req, res, session);
-    res.sendFile(__dirname + '/index.html');
+    auth.setSessionCookie(socket.request, socket.request.res || {}, next);
+});
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection',socket => {
     let users = {}
+
+    const session = auth.getSession(socket.request);
+    const getUsername = auth.getUsername(session);
+
+    console.log(getUsername);
 
     socket.on('user', (userData) => {
         console.log(`${getUsername} joined the chat.`);
