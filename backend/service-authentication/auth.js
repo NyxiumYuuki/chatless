@@ -21,8 +21,8 @@ module.exports.setSessionCookie = setSessionCookie;
 // de session. Si ce dernier n'existe pas, on renvoie
 // l'ID -1.
 function getUserId(session) {
-    if (typeof session.userId === 'undefined') return -1;
-    return session.userId;
+    if (typeof session.username === 'undefined') return -1;
+    return session.username;
 }
 module.exports.getUserId = getUserId;
 
