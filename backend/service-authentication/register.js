@@ -8,7 +8,7 @@ async function register(req,res) {
         return sendError(res, 'Vous n\'avez pas envoyé le champ password');
 
 
-    const register = await queries.register(login, password);
+    const register = await queries.register(req.body.login, req.body.password);
     if (register){
         return sendMessage(res, null);
     }
