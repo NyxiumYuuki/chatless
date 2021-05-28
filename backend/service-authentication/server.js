@@ -15,13 +15,17 @@ app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 const mongoConnect = require('./mongodbConnect');
 
 mongoConnect.connectToServer(function( err, client ) {
-    if (err) 
-        console.log(err);
+    if (err) console.log(err);
 
     const checkLogin = require('./checkLogin');
 
-    app.post('/checkLogin', (req, res) => { 
-        checkLogin(req,res); 
+    app.post('/checkLogin', (req, res) => {
+        checkLogin(req,res);
+    });
+
+    const register = require('./register');
+    app.post('/register', (req, res) => {
+        register(req,res);
     });
 
     app.listen(port, () => {

@@ -10,7 +10,6 @@ module.exports = {
             console.log('mongodb-authentication-checkConnection'+client===undefined);
             if (client !== undefined) console.log(client.isConnected());
             db  = client.db(config.mongodbDatabase);
-
             return callback( err );
         });
     },
