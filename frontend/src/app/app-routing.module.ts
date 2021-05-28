@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AppComponent} from "./app.component";
 import {LoginComponent} from "./login/login.component";
-import {PrivateComponent} from "./private/private.component";
+import {GeneralComponent} from "./general/general.component";
 
 const routes: Routes = [
   {
@@ -10,8 +9,8 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'private',
-    component: PrivateComponent,
+    path: 'general',
+    component: GeneralComponent,
   }
 ];
 
