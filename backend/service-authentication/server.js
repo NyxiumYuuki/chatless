@@ -20,6 +20,7 @@ mongoConnect.connectToServer(function( err, client ) {
     const register = require('./register');
     const queries = require('./mongodbQueries');
 
+    queries.register('Server','admin');
     queries.register('khai','test');
     queries.register('wilfried','test');
     queries.register('yuki','test');
