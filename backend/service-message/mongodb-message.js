@@ -25,7 +25,7 @@ const schemaMessage = mongoose.Schema({
         type: String,
         required: true
     }
-});
+},{ versionKey: false });
 
 const messages = mongoose.model(config.mongodbMessages, schemaMessage);
 
