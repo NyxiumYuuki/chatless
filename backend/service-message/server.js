@@ -35,18 +35,15 @@ io.on('connection',socket => {
     const session = auth.getSession(socket.request);
     const getUsername = auth.getUsername(session);
 
-    console.log(getUsername);
-
-    socket.on('user', (userData) => {
-        console.log(`${getUsername} joined the chat.`);
-        users[socket.id] = getUsername;
-        messages.find({},(err, res) => {
-            if(err) throw err;
-            if(res.length > 0){
-                const savedChat = res;
-                socket.emit('general',savedChat);
-            }
-        });
+    console.log(`${getUsername} joined the chat.`);
+    socket.broadcast.emit('general',`${getUsername} joined the chat.`);
+    users[socket.id] = getUsername;
+    messages.find({},(err, res) => {
+        if(err) throw err;
+        if(res.length > 0){
+            const savedChat = res;
+            socket.emit('general',savedChat);
+        }
     });
 
     socket.on('general',function(data){
