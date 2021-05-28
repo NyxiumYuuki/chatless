@@ -1,6 +1,7 @@
-import {NgModule, Component, OnInit} from '@angular/core';
+import {NgModule, Component, OnInit, Input} from '@angular/core';
 import {ChatService} from "../services/chat/chat.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AuthService} from "../services/auth/auth.service";
 
 
 @Component({
@@ -9,11 +10,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   styleUrls: ['./private.component.scss']
 })
 export class PrivateComponent implements OnInit {
+
   public userList = [
     {
       id: 1,
       name: 'Yuki Vachot',
-      phone: '0608020103',
+      login: 'yuki',
+      password: 'vachot1',
       roomId: {
         2: 'room-1',
         3: 'room-2',
@@ -23,7 +26,8 @@ export class PrivateComponent implements OnInit {
     {
       id: 2,
       name: 'Wilfried Vallee',
-      phone: '0604080701',
+      login: 'wilfried',
+      password: 'vallee2',
       roomId: {
         1: 'room-1',
         3: 'room-4',
@@ -33,7 +37,8 @@ export class PrivateComponent implements OnInit {
     {
       id: 3,
       name: 'Khai Phan',
-      phone: '0603050960',
+      login: 'khai',
+      password: 'phan3',
       roomId: {
         1: 'room-2',
         2: 'room-4',
@@ -53,7 +58,7 @@ export class PrivateComponent implements OnInit {
   public showScreen: boolean;
 
   // @ts-ignore
-  public phone: string;
+  public password: string;
   // @ts-ignore
   public currentUser;
   // @ts-ignore
@@ -62,11 +67,13 @@ export class PrivateComponent implements OnInit {
 
 
   constructor(
+    private Auth: AuthService,
     private chatService: ChatService,
 
   ) {
-
-
+    this.currentUser = this.Auth.sendAuth(this.currentUser);
+    this.userList = this.userList.filter((user) => user.password !== this.currentUser.password.toString());
+    console.log(this.userList);
   }
 
   ngOnInit(): void {
@@ -86,8 +93,8 @@ export class PrivateComponent implements OnInit {
 
   }
 
-  selectUserHandler(phone: string): void {
-    this.selectedUser = this.userList.find(user => user.phone === phone);
+  selectUserHandler(password: string): void {
+    this.selectedUser = this.userList.find(user => user.password === password);
     this.roomId = this.selectedUser.roomId[this.currentUser.id];
     this.messageArray = [];
 
@@ -140,4 +147,3 @@ export class PrivateComponent implements OnInit {
   }
 
 }
-

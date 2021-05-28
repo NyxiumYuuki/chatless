@@ -8,29 +8,28 @@ import {Observable} from "rxjs";
 })
 
 export class AuthService {
-  // @ts-ignore
+
   // @ts-ignore
   public roomId: string;
   // @ts-ignore
-  public messageText: string;
-  public messageArray: {user: string, message: string}[] = [];
-  private storageArray = [];
+  public name: string;
+  // @ts-ignore
+  public login: string;
 
   // @ts-ignore
   public showScreen: boolean;
 
   // @ts-ignore
-  public phone: string;
+  public password: string;
   // @ts-ignore
   public currentUser;
-  // @ts-ignore
-  public selectedUser;
 
   public userList = [
     {
       id: 1,
       name: 'Yuki Vachot',
-      phone: '0608020103',
+      login: 'yuki',
+      password: 'vachot1',
       roomId: {
         2: 'room-1',
         3: 'room-2',
@@ -40,7 +39,8 @@ export class AuthService {
     {
       id: 2,
       name: 'Wilfried Vallee',
-      phone: '0604080701',
+      login: 'wilfried',
+      password: 'vallee2',
       roomId: {
         1: 'room-1',
         3: 'room-4',
@@ -50,7 +50,8 @@ export class AuthService {
     {
       id: 3,
       name: 'Khai Phan',
-      phone: '0603050960',
+      login: 'khai',
+      password: 'phan3',
       roomId: {
         1: 'room-2',
         2: 'room-4',
@@ -60,20 +61,23 @@ export class AuthService {
   ];
 
   constructor() {}
-  sendAuthentication(phone: string): boolean {
-    this.phone = phone;
-    this.currentUser = this.userList.find(user => user.phone === this.phone.toString());
-    this.userList = this.userList.filter((user) => user.phone !== this.phone.toString());
-    //console.log("2 -", this.currentUser.phone);
-    console.log("3 -", this.phone);
+
+  sendAuthentication(login:string, password: string): boolean {
+    this.login = login;
+    this.password = password;
+    this.currentUser = this.userList.find(user => user.password === this.password.toString());
+    this.userList = this.userList.filter((user) => user.password !== this.password.toString());
     if(this.currentUser) {
       this.showScreen = true;
-      console.log("user : TRUE", this.phone.toString());
     } else {
-      console.log("error user", this.phone.toString());
+      console.log("Password Error", this.password.toString());
     }
     return this.showScreen ;
   }
 
+  sendAuth(password: string): any {
+    this.password = password;
+    return this.currentUser ;
+  }
 
 }

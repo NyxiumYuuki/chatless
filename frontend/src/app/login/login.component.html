@@ -1,23 +1,28 @@
 <div class="container">
   <div class="modal-header">
-    <h4 class="modal-title">Login</h4>
+    <h4 class="modal-title">Veuillez-vous authentifier :</h4>
   </div>
 
   <div class="modal-body">
     <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
+      <div class="col-md-10">
+        <div class="form-group mb-0">
           <input type="text"
-                 placeholder="Enter your phone number"
+                 placeholder="Entrez votre login"
                  class="form-control"
-                 [(ngModel)]="phone">
+                 [(ngModel)]="name">
+          <input type="text"
+                 placeholder="Entrez votre password"
+                 class="form-control"
+                 [(ngModel)]="password">
         </div>
       </div>
     </div>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-primary" (click) = "login()">Login</button>
+    <button class="btn btn-sm btn-primary" (click) = "login()">Connexion Privée</button>
+    <button class="btn btn-sm btn-primary" (click) = "login2()">Connexion Générale</button>
   </div>
 
 </div>

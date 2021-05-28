@@ -1,17 +1,17 @@
-<div class="container-fluid" *ngIf="showScreen">
+<div class="container-fluid" >
   <div class="row">
 
     <div class="col-md-4">
 
       <div class="user-list-card">
         <div class="user-card"
-             [ngClass]="{'active' : user?.phone === selectedUser?.phone}"
+             [ngClass]="{'active' : user?.password === selectedUser?.password}"
              *ngFor="let user of userList"
-             (click)="selectUserHandler(user.phone)"
+             (click)="selectUserHandler(user.password)"
         >
           <!---->
 
-          <img src="./assets/image/user.png" height="25" width="25"/>
+          <img src="../../assets/image/user.png" height="25" width="25"/>
           <p class="username">{{user?.name}}</p>
 
         </div>
@@ -40,12 +40,12 @@
             <div class="row">
               <div class="col-md-10">
                 <div class="form-group mb-0">
-                  <input type="text" placeholder="Type a message" class="form-control"
+                  <input type="text" placeholder="Entrez votre message" class="form-control"
                          [(ngModel)]="messageText" (keyup)="$event.keyCode === 13 && sendMessage()"/>
                 </div>
               </div>
               <div class="col-md-2 text-center align-self-center">
-                <button class="btn btn-primary btn-bm px-3 " (click)="sendMessage()">Send</button>
+                <button class="btn btn-primary btn-bm px-3 " (click)="sendMessage()">Envoyer</button>
               </div>
             </div>
 

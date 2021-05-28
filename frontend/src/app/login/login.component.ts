@@ -11,8 +11,8 @@ import {AuthService} from "../services/auth/auth.service";
 export class LoginComponent implements OnInit {
 
 
-  public phone = '';
-
+  public password = '';
+  public name = '';
 
   constructor(
     private auth: AuthService,
@@ -27,23 +27,26 @@ export class LoginComponent implements OnInit {
 
 
   login() : void {
-    console.log('1 -Phone :', this.phone);
-    if (this.auth.sendAuthentication(this.phone) === true){
+    console.log(this.name, this.password);
+    if (this.auth.sendAuthentication(this.name, this.password) === true){
+      this.auth.sendAuth(this.password);
       this.router.navigateByUrl('/private');
     } else {
       console.log("error");
     }
   }
 
+  login2() : void {
+    console.log(this.name, this.password);
+    if (this.auth.sendAuthentication(this.name, this.password) === true){
+      this.auth.sendAuth(this.password);
+      this.router.navigateByUrl('/general');
+    } else {
+      console.log("error");
+    }
+  }
+
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -35,6 +35,34 @@ export class ChatService {
     });
   }
 
+  newUserJoined()
+  {
+    let observable = new Observable<{user:String, message:String}>(observer=>{
+      this.socket.on('new user joined', (data)=>{
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+
+    return observable;
+  }
+
+  // @ts-ignore
+  leaveRoom(data){
+    this.socket.emit('leave',data);
+  }
+
+  userLeftRoom(){
+    let observable = new Observable<{user:String, message:String}>(observer=>{
+      this.socket.on('left room', (data)=>{
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+
+    return observable;
+  }
+
   getStorage() {
     const storage = localStorage.getItem('chats');
     return storage ? JSON.parse(storage) : [];

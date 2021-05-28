@@ -1,1 +1,54 @@
-<p>general works!</p>
+<div class="container-fluid" >
+  <div class="row">
+
+    <div class="col-md-4">
+
+      <div class="user-list-card">
+        <div class="user-card"
+             [ngClass]="{'active' : user?.password === selectedUser?.password}"
+             *ngFor="let user of userList"
+             (click)="selectUserHandler(user.password)"
+        >
+          <!---->
+
+          <img src="../../assets/image/user.png" height="25" width="25"/>
+          <p class="username">{{user?.name}}</p>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-8">
+
+      <div class="chat-container">
+        <ng-container *ngIf="selectedUser">
+          <div class="chat-header">
+            <p class="username">{{selectedUser?.name}}</p>
+          </div>
+
+          <div class="chat-body">
+            <div *ngFor="let item of messageArray">
+              <span><strong>{{item.user}} : </strong> {{item.message}}</span>
+            </div>
+
+          </div>
+
+          <div class="chat-footer">
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group mb-0">
+                  <input type="text" placeholder="Entrez votre message" class="form-control"
+                         [(ngModel)]="messageText"/>
+                </div>
+              </div>
+              <div class="col-md-2 text-center align-self-center">
+                <button class="btn btn-primary btn-bm px-3 " (click)="sendMessage()">Envoyer</button>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
