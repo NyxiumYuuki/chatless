@@ -1,10 +1,25 @@
 version: '3.8'
 
 services:
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    command: ng serve --host 0.0.0.0
+    volumes:
+      - frontend
+      - frontend/node_modules
+    ports:
+      - 4200:4200
+    depends_on:
+      - service-authentication
+      - service-message
+    links:
+      - service-authentication
+      - service-message
 
   service-authentication:
     container_name: service-authentication
-    build: backend/service-authentication
+    build: ./backend/service-authentication
     command: node server.js
     volumes:
       - backend/service-authentication
@@ -20,7 +35,7 @@ services:
 
   service-message:
     container_name: service-message
-    build: backend/service-message
+    build: ./backend/service-message
     command: node server.js
     volumes:
       - backend/service-message
