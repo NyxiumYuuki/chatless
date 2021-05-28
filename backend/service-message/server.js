@@ -5,10 +5,7 @@ const cors = require ('cors');
 const cookieParser = require('cookie-parser');
 const auth = require ('./auth');
 const bodyParser = require ('body-parser');
-const {sendError, sendMessage} = require ('./message');
 const messages = require('./mongodb-message');
-
-
 
 const app = express();
 const server = http.createServer(app);
@@ -30,29 +27,37 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection',socket => {
-    let users = {}
+
+    let users = {};
 
     const session = auth.getSession(socket.request);
     const getUsername = auth.getUsername(session);
     if (getUsername === -1) {
-        return sendError(socket, 'not authenticated');
+        socket.emit('error','not authenticated');
     }
-
     console.log(`${getUsername} joined the chat.`);
-    socket.emit('general',`${getUsername} joined the chat.`);
+    socket.broadcast.emit('general',[{
+        username: 'Server',
+        date: new Date(),
+        channel: 'general',
+        message: `${getUsername} joined the chat.`
+    }]);
     users[socket.id] = getUsername;
-    messages.find({},(err, res) => {
+    messages.find({}, {'_id':0},{sort: {'date':1}},(err, res) => {
         if(err) throw err;
         if(res.length > 0){
-            const savedChat = res;
-            console.log(res);
-            socket.emit('general',savedChat);
+            //console.log(res, res.length);
+            socket.emit('general',res);
         }
+        socket.emit('general',[{
+            username: 'Server',
+            date: new Date(),
+            channel: 'general',
+            message: `${getUsername} joined the chat.`
+        }]);
     });
 
     socket.on('general',function(data){
-        socket.emit('general',data);
-
         const username = data.username;
         const date = Date.now();
         const channel = 'general';
@@ -66,15 +71,13 @@ io.on('connection',socket => {
             }
         ]).then(function(){
             console.log(data, "inserted");
+            socket.broadcast.emit('general',[data]);
+            socket.emit('general',[data]);
         }).catch(function(error){
             console.log("error",error);
         });
 
     });
-
-    socket.on('typing',(user)=>{
-        socket.broadcast.emit('notifyTyping',user)
-    })
 
     socket.on("disconnect", function() {
         console.log(`${getUsername} left the chat.`);
