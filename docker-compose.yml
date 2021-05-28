@@ -3,27 +3,33 @@ version: '3.8'
 services:
 
   service-authentication:
+    container_name: service-authentication
     build: backend/service-authentication
     command: node server.js
     volumes:
       - backend/service-authentication
       - backend/service-authentication/node_modules
     ports:
-      - 3001:3000
+      - 3000:3000
     depends_on:
+      - mongodb-authentication
+    links:
       - mongodb-authentication
     environment:
       NODE_ENV: development
 
   service-message:
+    container_name: service-message
     build: backend/service-message
     command: node server.js
     volumes:
       - backend/service-message
       - backend/service-message/node_modules
     ports:
-      - 3000:3000
+      - 3001:3000
     depends_on:
+      - mongodb-message
+    links:
       - mongodb-message
     environment:
       NODE_ENV: development
@@ -31,23 +37,15 @@ services:
   mongodb-authentication:
     image: mongo
     container_name: mongodb-authentication
-    environment:
-      - PUID=1001
-      - PGID=1001
     volumes:
       - ./backend/service-authentication/database:/data/db
     ports:
       - 27017:27017
-    restart: unless-stopped
 
   mongodb-message:
     image: mongo
     container_name: mongodb-message
-    environment:
-      - PUID=1000
-      - PGID=1000
     volumes:
       - ./backend/service-message/database:/data/db
     ports:
       - 27020:27017
-    restart: unless-stopped
