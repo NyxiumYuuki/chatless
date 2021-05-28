@@ -20,7 +20,7 @@ function register(login, password){
             {'login': login},
             {$set: { 'login': login, 'password': password}},
             {upsert:true},function(err,res){
-                console.log(res);
+                //console.log(res);
                 if(res !== undefined){
                     resolve(res.upsertedCount === 1);
                 }
