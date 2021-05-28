@@ -18,19 +18,12 @@ export class MessageService {
   constructor(private http: HttpClient) { }
   sendMessage(url: string, data: any): Observable<JSdata> {
     const CreatURL = environment.urlCL.concat('/').concat(url);
-    const FData = new FormData();
-    let i: any;
-    if (data !== null && data !== undefined) {
-      for (i of Object.keys(data)){
-        FData.append(i, data[i]);
-      }
-    }
+    console.log(CreatURL, data);
     return this.http.post<JSdata>(
       CreatURL,
-      FData,
+      data,
       {withCredentials: true}
     );
-    return this.http.post<JSdata>(CreatURL, {withCredentials: true});
   }
 }
 
