@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
 io.on('connection',socket => {
 

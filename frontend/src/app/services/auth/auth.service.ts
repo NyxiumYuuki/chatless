@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {JSdata, MessageService} from "../message/message.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AuthService {
   }
 
   sendAuthentication(login: string, password: string): Observable<JSdata> {
-    return this.messageService.sendMessage('checkLogin', {
+    return this.messageService.sendMessage(environment.urlCL,'checkLogin', {
       'login': login,
       'password': password
     });

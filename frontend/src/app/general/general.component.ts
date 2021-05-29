@@ -1,7 +1,8 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatInfo, ChatService} from "../services/chat/chat.service";
 import {environment} from "../../environments/environment";
 import {DatePipe} from "@angular/common";
+import {MessageService} from "../services/message/message.service";
 
 @Component({
   selector: 'app-general',
@@ -18,10 +19,20 @@ export class GeneralComponent implements OnInit {
   @ViewChild('ulMessages') ulMsg: ElementRef;
 
 
-  constructor(private chatservice: ChatService, private pipe: DatePipe) {}
+  constructor(private chatservice: ChatService, private pipe: DatePipe, private messageservice: MessageService) {}
 
   ngOnInit() {
     console.log('General working');
+    this.messageservice.sendMessage(environment.urlCL,'getUsers', {username: this.username}).subscribe(
+      data => {
+        if (data.status !== 'ok'){
+          console.log(data.data.reason);
+        }
+        else{
+          console.log(data.data);
+        }
+      }
+    );
     this.chatservice.setUrl(environment.urlCG);
     this.chatservice.setRoom(this.room);
     this.chatservice.onNewMessage(this.room).subscribe((infos: ChatInfo[]) => {

@@ -24,6 +24,7 @@ services:
     volumes:
       - backend/service-authentication
       - backend/service-authentication/node_modules
+      - backend/service-authentication/keys
     ports:
       - 3000:3000
     depends_on:
@@ -53,7 +54,7 @@ services:
     image: mongo
     container_name: mongodb-authentication
     volumes:
-      - ./backend/service-authentication/database:/data/db
+      - ./backend/service-authentication/database:/data/db-authentication
     ports:
       - 27017:27017
 
@@ -61,6 +62,6 @@ services:
     image: mongo
     container_name: mongodb-message
     volumes:
-      - ./backend/service-message/database:/data/db
+      - ./backend/service-message/database:/data/db-message
     ports:
       - 27020:27017
