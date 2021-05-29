@@ -53,7 +53,7 @@ export class ChatService {
     return new Observable(observer => {
       // @ts-ignore
       this.socket.on(room, (data: ChatInfo[]) => {
-        console.log(data);
+        //console.log(data);
         observer.next(data);
       });
     });

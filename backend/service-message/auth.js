@@ -1,26 +1,28 @@
-const sessionJwt = require ('./sessionJWT');
+const request = require('request');
 
-// ici, on récupère le contenu du cookie de session JWT.
-// celui-ci contient le userId mais également des informations
-// concernant sa date d'expiration.
-function getSession (req) {
-    return sessionJwt.decodeSessionCookie(req);
+function getSession (req, callback) {
+    if(typeof req.headers.cookie !== 'undefined'){
+        request.post({
+            headers: {'content-type' : 'application/x-www-form-urlencoded'},
+            url: 'http://127.0.0.1:3000/verify:token',
+            body: 'sessionid='+req.headers.cookie.replace('SESSIONID=','')
+        },function (error, response, body) {
+            const bodyJson = JSON.parse(body);
+            if (bodyJson && bodyJson.status && bodyJson.data) {
+                if (bodyJson.status === 'ok') {
+                    return callback(bodyJson.data.token);
+                } else {
+                    return callback(bodyJson.data.reason);
+                }
+            }
+        });
+    }
+    return callback(undefined);
 }
 module.exports.getSession = getSession;
 
-// cette fonction ajoute le cookie de session au headers du
-// message qui sera renvoyé à Angular. Si le cookie actuel
-// est "vieux", on en recrée ici un nouveau.
-function setSessionCookie (req, res, session) {
-    sessionJwt.createSessionCookie(req, res, session);
-}
-module.exports.setSessionCookie = setSessionCookie;
-
-// fonction pour récupérer le userId provenant du cookie
-// de session. Si ce dernier n'existe pas, on renvoie
-// l'ID -1.
 function getUsername(session) {
-    if (typeof session.username === 'undefined') return -1;
+    if (typeof session === 'undefined' || typeof session.username === 'undefined') return -1;
     return session.username;
 }
 module.exports.getUsername = getUsername;

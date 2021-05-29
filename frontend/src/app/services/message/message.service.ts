@@ -18,7 +18,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
   sendMessage(url: string, data: any): Observable<JSdata> {
     const CreatURL = environment.urlCL.concat('/').concat(url);
-    console.log(CreatURL, data);
+    //console.log(CreatURL, data);
     return this.http.post<JSdata>(
       CreatURL,
       data,

@@ -19,16 +19,23 @@ mongoConnect.connectToServer(function( err, client ) {
     const checkLogin = require('./checkLogin');
     const register = require('./register');
     const queries = require('./mongodbQueries');
+    const auth =  require('./auth');
 
     queries.register('Server','admin');
     queries.register('khai','test');
     queries.register('wilfried','test');
     queries.register('yuki','test');
 
+    app.post('/verify:token', (req, res) => {
+        if(typeof req.body !== 'undefined'){
+            auth.getSession(req.body.sessionid,res);
+        }
+        return null;
+    });
+
     app.post('/checkLogin', (req, res) => {
         checkLogin(req,res);
     });
-
 
     app.post('/register', (req, res) => {
         register(req,res);

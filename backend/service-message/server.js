@@ -30,59 +30,61 @@ io.on('connection',socket => {
 
     let users = {};
 
-    const session = auth.getSession(socket.request);
-    const getUsername = auth.getUsername(session);
-    if (getUsername === -1) {
-        socket.emit('error','not authenticated');
-    }
-    console.log(`${getUsername} joined the chat.`);
-    socket.broadcast.emit('general',[{
-        username: 'Server',
-        date: new Date(),
-        channel: 'general',
-        message: `${getUsername} joined the chat.`
-    }]);
-    users[socket.id] = getUsername;
-    messages.find({}, {'_id':0},{sort: {'date':1}},(err, res) => {
-        if(err) throw err;
-        if(res.length > 0){
-            //console.log(res, res.length);
-            socket.emit('general',res);
+    auth.getSession(socket.request, function(res){
+        const getUsername = auth.getUsername(res);
+        if (getUsername === -1) {
+            socket.send('error','not authenticated');
         }
-        socket.emit('general',[{
-            username: 'Server',
-            date: new Date(),
-            channel: 'general',
-            message: `${getUsername} joined the chat.`
-        }]);
+        else{
+            console.log(`${getUsername} joined the chat.`);
+            socket.broadcast.emit('general',[{
+                username: 'Server',
+                date: new Date(),
+                channel: 'general',
+                message: `${getUsername} joined the chat.`
+            }]);
+            users[socket.id] = getUsername;
+            messages.find({}, {'_id':0},{sort: {'date':1}},(err, res) => {
+                if(err) throw err;
+                if(res.length > 0){
+                    //console.log(res, res.length);
+                    socket.emit('general',res);
+                }
+                socket.emit('general',[{
+                    username: 'Server',
+                    date: new Date(),
+                    channel: 'general',
+                    message: `${getUsername} joined the chat.`
+                }]);
+            });
+
+            socket.on('general',function(data){
+                const username = data.username;
+                const date = Date.now();
+                const channel = 'general';
+                const message = data.message;
+
+                messages.insertMany([{
+                    username: username,
+                    date: date,
+                    channel: channel,
+                    message: message
+                }
+                ]).then(function(){
+                    console.log(data, "inserted");
+                    socket.broadcast.emit('general',[data]);
+                    socket.emit('general',[data]);
+                }).catch(function(error){
+                    console.log("error",error);
+                });
+
+            });
+
+            socket.on("disconnect", function() {
+                console.log(`${getUsername} left the chat.`);
+            });
+        }
     });
-
-    socket.on('general',function(data){
-        const username = data.username;
-        const date = Date.now();
-        const channel = 'general';
-        const message = data.message;
-
-        messages.insertMany([{
-                username: username,
-                date: date,
-                channel: channel,
-                message: message
-            }
-        ]).then(function(){
-            console.log(data, "inserted");
-            socket.broadcast.emit('general',[data]);
-            socket.emit('general',[data]);
-        }).catch(function(error){
-            console.log("error",error);
-        });
-
-    });
-
-    socket.on("disconnect", function() {
-        console.log(`${getUsername} left the chat.`);
-    });
-
 });
 
 server.listen(port, () => {
