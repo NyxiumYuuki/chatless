@@ -24,5 +24,6 @@
     <button class="btn btn-sm btn-primary" (click) = "showCredentials()">Connexion Privée</button>
     <button class="btn btn-sm btn-primary" (click) = "showCredentials()">Connexion Générale</button>
   </div>
-
+  <br>
+    <p class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">{{errorMessage}}</p>
 </div>

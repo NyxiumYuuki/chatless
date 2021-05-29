@@ -5,6 +5,7 @@ body {
 .container-fluid {
   padding: 50px 200px;
   overflow: hidden;
+  background-color: #87CEEB;
 }
 
 .user-list-card {
@@ -54,9 +55,10 @@ body {
     align-items: center;
 
     .username {
-      font-size: 14px;
+      font-size: 20px;
       font-weight: 500;
       margin-bottom: 0;
+      margin-left: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -64,7 +66,7 @@ body {
   }
 
   .chat-body {
-    background-image: url(./assets/image/user.png);
+    background-image: url(./assets/image/fond.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -106,4 +108,8 @@ body {
       color: black;
     }
   }
+}
+
+.modal-footer {
+  display: block;
 }

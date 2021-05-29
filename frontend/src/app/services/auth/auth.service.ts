@@ -11,6 +11,8 @@ export class AuthService {
 
   // @ts-ignore
   islog: boolean;
+  // @ts-ignore
+  public currentUser;
 
   constructor(private messageService: MessageService) { }
 
