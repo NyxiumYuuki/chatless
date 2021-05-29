@@ -18,6 +18,7 @@ mongoConnect.connectToServer(function( err, client ) {
     if (err) console.log(err);
     const checkLogin = require('./checkLogin');
     const register = require('./register');
+    const getUsers = require('./getUsers');
     const queries = require('./mongodbQueries');
     const auth =  require('./auth');
 
@@ -39,6 +40,10 @@ mongoConnect.connectToServer(function( err, client ) {
 
     app.post('/register', (req, res) => {
         register(req,res);
+    });
+
+    app.post('/getUsers', (req, res) => {
+        getUsers(req,res);
     });
 
     app.listen(port, () => {

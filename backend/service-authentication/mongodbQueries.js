@@ -29,3 +29,16 @@ function register(login, password){
 }
 module.exports.register = register;
 
+function getUsersQuery(username){
+    return new Promise((resolve, reject) => {
+        mongoDB.collection(config.mongodbUtilisateurs).find(
+            { $and: [{'login': {$ne: 'Server'}}, {'login': {$ne: username}}]},
+            {projection: {_id: 0, password: 0}}
+        ).toArray(function (err, result){
+            if(err) throw err;
+            resolve(result);
+        });
+    });
+}
+module.exports.getUsersQuery = getUsersQuery
+
