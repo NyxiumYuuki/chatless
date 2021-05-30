@@ -68,7 +68,7 @@ services:
 
   mongodb-privateroom:
     image: mongo
-    container_name: privateroom
+    container_name: mongodb-privateroom
     volumes:
       - ./backend/service-privateroom/database:/data/db-privateroom
     ports:
