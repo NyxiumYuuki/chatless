@@ -47,67 +47,42 @@ body {
   position: relative;
   overflow: hidden;
 
-  .chat-header {
-    height: 70px;
-    background-color: #E5E5E5;
+
+}
+
+.chat-header {
+  height: 70px;
+  border-radius: 10px;
+  background-color: #E5E5E5;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .username {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-left: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-
-    .username {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 0;
-      margin-left: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
+}
 
-  .chat-body {
-    background-image: url(./assets/image/fond.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    height: calc(100vh - 125px);
-    overflow-y: auto;
+.chat-body {
+  background-color: white;
+  border-radius: 10px;
+  height: calc(89.5vh - 89.5px);
+  overflow-y: auto;
+}
 
-    .message-container {
-      background-color: white;
-      padding: 7px;
-      border-radius: 5px;
-      width: fit-content;
-      max-width: 90%;
-      margin-bottom: 15px;
-    }
-
-    .same-user {
-      display: flex;
-      justify-content: flex-end;
-
-      .message-container {
-        background-color: lightskyblue;
-      }
-    }
-  }
-
-  .chat-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #EDEDED;
-    padding: 10px 20px;
-
-    .form-control {
-      background-color: white;
-      border: 1px solid #D8DDEC;
-      box-sizing: border-box;
-      font-size: 1rem;
-      color: black;
-    }
-  }
+.chat-footer {
+  border-radius: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #EDEDED;
+  padding: 10px 20px;
 }
 
 .modal-footer {

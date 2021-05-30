@@ -11,7 +11,7 @@ import {MessageService} from "../services/message/message.service";
 })
 export class GeneralComponent implements OnInit {
 
-  private username = sessionStorage.getItem('login');
+  public username = sessionStorage.getItem('login');
   private room = 'general';
   public msg = '';
 
