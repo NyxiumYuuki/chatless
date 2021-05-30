@@ -20,16 +20,16 @@ export class LoginComponent implements OnInit {
   }
 
   showCredentials(): void {
-    console.log('Login :', this.login);
-    console.log('Password :', this.password);
+    // console.log('Login :', this.login);
+    // console.log('Password :', this.password);
     this.auth.sendAuthentication(this.login, this.password).subscribe(data => {
       this.auth.finalizeAuthentication(data);
-      if (this.auth.islog === true) {
+      if (this.auth.islog) {
         sessionStorage.setItem('login', this.login);
-        this.router.navigateByUrl('/general');
+        this.router.navigateByUrl('/chat');
       } else {
         this.errorMessage = data.data.reason;
-        console.log(this.errorMessage);
+        //console.log(this.errorMessage);
       }
     });
 
