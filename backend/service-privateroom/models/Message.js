@@ -24,8 +24,7 @@ const MessageSchema = new mongoose.Schema(
             type: Date,
         },
     },
-    { timestamps: true },
-    { versionKey: false }
+    { timestamps: true, versionKey: false }
 );
 
 module.exports = mongoose.model(config.mongodbPrivatedMessages, MessageSchema);

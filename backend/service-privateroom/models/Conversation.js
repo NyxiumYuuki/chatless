@@ -15,8 +15,7 @@ const ConversationSchema = new mongoose.Schema(
             type: Array
         },
     },
-    { timestamps: true },
-    { versionKey: false }
+    { timestamps: true, versionKey: false }
 );
 
 module.exports = mongoose.model(config.mongodbConversations, ConversationSchema);
