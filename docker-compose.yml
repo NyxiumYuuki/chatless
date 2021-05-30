@@ -65,3 +65,11 @@ services:
       - ./backend/service-message/database:/data/db-message
     ports:
       - 27020:27017
+
+  mongodb-privateroom:
+    image: mongo
+    container_name: privateroom
+    volumes:
+      - ./backend/service-privateroom/database:/data/db-privateroom
+    ports:
+      - 27021:27017
