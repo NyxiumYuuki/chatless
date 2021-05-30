@@ -60,7 +60,7 @@ io.on('connection',socket => {
 
             socket.on('general',function(data){
                 const username = data.username;
-                const date = Date.now();
+                const date = data.date;
                 const channel = 'general';
                 const message = data.message;
 

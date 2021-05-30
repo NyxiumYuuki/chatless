@@ -9,7 +9,6 @@ export interface ChatInfo {
   message: string
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -39,16 +38,27 @@ export class ChatService {
     });
   }
 
-  sendMessage(username: string | null, room: string, message: string) {
-    // @ts-ignore
-    this.socket.emit(room, {
-      username: username,
-      date: new Date(),
-      room: room,
-      message: message
-    });
-  }
+  sendMessage(sender: string | null, receiver: string | null, room: string, message: string) {
+    if(receiver === null){
+      // @ts-ignore
+      this.socket.emit(room, {
+        username: sender,
+        date: new Date(),
+        room: room,
+        message: message
+      });
+    }
+    else{
+      // @ts-ignore
+      this.socket.emit('privateroom', {
+        sender: sender,
+        receiver: receiver,
+        date: new Date(),
+        message: message
+      });
+    }
 
+  }
   leaveRoom(): void {
     // @ts-ignore
     this.socket?.disconnect();
