@@ -49,6 +49,11 @@ export class ChatService {
     });
   }
 
+  leaveRoom(): void {
+    // @ts-ignore
+    this.socket?.disconnect();
+  }
+
   onNewMessage(room: string): Observable<ChatInfo[]> {
     return new Observable(observer => {
       // @ts-ignore
