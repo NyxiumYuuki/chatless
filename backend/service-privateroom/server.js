@@ -30,6 +30,7 @@ const path = require("path");
 const config = require("./config");
 
 const Conversations = require("../service-privateroom/models/Conversation");
+const Messages = require("../service-privateroom/models/Message");
 const url = config.mongodbHost+config.mongodbDatabase;
 
 mongoose.connect(url,({useNewUrlParser: true, useUnifiedTopology: true})).then( function(){
@@ -55,6 +56,35 @@ io.on('connection',socket => {
             console.log(`${getUsername} joined the chat.`);
 
             //TODO apply conversations and messages
+            socket.on('privateroom',function(data){
+                const sender = data.sender;
+                const receiver = data.receiver;
+                const date = data.date;
+                const message = data.message;
+
+                // get conversationid
+                const conversation = async () => {
+                    const result = await Conversations.find({
+                        members: {$eq: [sender, receiver]},
+                    });
+                    return result;
+                }
+                const conversationId = conversation[0]["_id"];
+
+                Messages.insertMany([{
+                    conversationId: conversationId,
+                    sender: sender,
+                    text: message,
+                    date: date
+                }
+                ]).then(function(){
+                    console.log(data, "inserted");
+                    socket.broadcast.emit(conversationId,[data]);
+                    socket.emit(conversationId,[data]);
+                }).catch(function(error){
+                    console.log("error",error);
+                });
+            });
 
             socket.on("disconnect", function() {
                 console.log(`${getUsername} left the chat.`);
