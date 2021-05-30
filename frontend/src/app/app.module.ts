@@ -5,15 +5,19 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { GeneralComponent } from './general/general.component';
 import {CommonModule, DatePipe} from "@angular/common";
+import { PrivateComponent } from './private/private.component';
+import { ChatComponent } from './chat/chat.component';
+import { MessageComponent } from './message/message.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    GeneralComponent
+    PrivateComponent,
+    ChatComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
