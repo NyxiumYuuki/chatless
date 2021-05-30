@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
-import {GeneralComponent} from "./general/general.component";
+import {ChatComponent} from "./chat/chat.component";
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent,
   },
   {
-    path: 'general',
-    component: GeneralComponent,
+    path: 'chat',
+    component: ChatComponent,
   }
 ];
 
