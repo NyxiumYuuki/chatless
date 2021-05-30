@@ -57,7 +57,6 @@ export class ChatService {
         message: message
       });
     }
-
   }
   leaveRoom(): void {
     // @ts-ignore
