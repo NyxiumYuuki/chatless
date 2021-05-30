@@ -49,6 +49,7 @@ export class ChatService {
       });
     }
     else{
+      //console.log('sendMessage private: ',sender,receiver,message);
       // @ts-ignore
       this.socket.emit('privateroom', {
         sender: sender,
@@ -64,6 +65,7 @@ export class ChatService {
   }
 
   onNewMessage(room: string): Observable<ChatInfo[]> {
+    //console.log('onNewMessage: ',room);
     return new Observable(observer => {
       // @ts-ignore
       this.socket.on(room, (data: ChatInfo[]) => {
