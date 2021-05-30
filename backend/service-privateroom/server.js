@@ -22,23 +22,12 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 
-const mongoose = require("mongoose");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
-const router = express.Router();
-const path = require("path");
-const config = require("./config");
 
 const Conversations = require("../service-privateroom/models/Conversation");
 const Messages = require("../service-privateroom/models/Message");
-const url = config.mongodbHost+config.mongodbDatabase;
-
-mongoose.connect(url,({useNewUrlParser: true, useUnifiedTopology: true})).then( function(){
-    console.log('mongodb-privated-room connected '+mongoose.connection.readyState);
-}).catch(function(err){
-    console.log('error : '+err);
-});
-
+const auth = require("./auth");
 
 app.use("/conversations", conversationRoute);
 app.use("/messages", messageRoute);
