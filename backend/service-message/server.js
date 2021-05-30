@@ -82,6 +82,13 @@ io.on('connection',socket => {
 
             socket.on("disconnect", function() {
                 console.log(`${getUsername} left the chat.`);
+                socket.broadcast.emit('general',[{
+                    username: 'Server',
+                    date: new Date(),
+                    channel: 'general',
+                    message: `${getUsername} left the chat.`
+                }]);
+
             });
         }
     });
