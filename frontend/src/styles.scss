@@ -12,7 +12,8 @@ body {
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   height: calc(100vh - 100px);
-  padding: 10px;
+  padding: 0;
+  overflow-y: auto;
 
   .user-card {
     display: flex;
@@ -28,6 +29,7 @@ body {
       font-weight: 500;
       margin-bottom: 0;
       display: flex;
+      margin-left: 5px;
       justify-content: center;
       align-items: center;
     }
@@ -64,11 +66,11 @@ body {
   }
 
   .chat-body {
-    background-image: url(./assets/image/user.png);
+    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    height: calc(100vh - 125px);
+    height: calc(89vh - 125px);
     overflow-y: auto;
 
     .message-container {
