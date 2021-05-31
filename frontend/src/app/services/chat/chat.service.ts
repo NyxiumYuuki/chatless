@@ -30,6 +30,7 @@ export class ChatService {
 
   setRoom(room: string){
     this.room = room;
+    this.joinRoom(this.room);
   }
 
   setSocket(){
@@ -38,8 +39,8 @@ export class ChatService {
     });
   }
 
-  sendMessage(sender: string | null, receiver: string | null, room: string, message: string) {
-    if(receiver === null){
+  sendMessage(sender: string | null, room: string, message: string) {
+    if(room === 'general' || room === 'General'){
       // @ts-ignore
       this.socket.emit(room, {
         username: sender,
@@ -49,16 +50,24 @@ export class ChatService {
       });
     }
     else{
-      //console.log('sendMessage private: ',sender,receiver,message);
+      //console.log('sendMessage private: ',sender,room,message);
       // @ts-ignore
       this.socket.emit('privateroom', {
         sender: sender,
-        receiver: receiver,
+        room: room,
         date: new Date(),
         message: message
       });
     }
   }
+
+  joinRoom(room: string): void{
+    //@ts-ignore
+    this.socket.emit('joinroom', {
+      room: room
+    });
+  }
+
   leaveRoom(): void {
     // @ts-ignore
     this.socket?.disconnect();
