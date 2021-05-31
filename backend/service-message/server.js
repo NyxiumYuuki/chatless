@@ -28,22 +28,19 @@ app.use(cookieParser());
 
 io.on('connection',socket => {
 
-    let users = {};
-
     auth.getSession(socket.request, function(res){
         const getUsername = auth.getUsername(res);
         if (getUsername === -1) {
             socket.send('error','not authenticated');
         }
         else{
-            console.log(`${getUsername} joined the chat.`);
+            console.log(`${new Date()}] ${getUsername} joined the chat.`);
             socket.broadcast.emit('general',[{
                 username: 'Server',
                 date: new Date(),
                 channel: 'general',
                 message: `${getUsername} joined the chat.`
             }]);
-            users[socket.id] = getUsername;
             messages.find({}, {'_id':0},{sort: {'date':1}},(err, res) => {
                 if(err) throw err;
                 if(res.length > 0){
