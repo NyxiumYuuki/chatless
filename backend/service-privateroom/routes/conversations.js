@@ -10,9 +10,9 @@ router.post("/newConv", async (req, res) => {
 
     try{
         const savedConversation = await newConversation.save();
-        sendMessage(res,savedConversation);
+        sendMessage(res,savedConversation._id);
     }catch (err){
-        sendMessage(res,err);
+        sendError(res,err);
     }
 });
 
