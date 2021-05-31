@@ -42,3 +42,17 @@ function getUsersQuery(username){
 }
 module.exports.getUsersQuery = getUsersQuery
 
+function changePasswordQuery(login, password, newPassword){
+    return new Promise((resolve, reject) => {
+        mongoDB.collection(config.mongodbUtilisateurs).findOneAndUpdate(
+            {'login': login, 'password': password},
+            {$set: { 'login': login, 'password': newPassword}}
+            ,function(err,res){
+                if(res !== undefined){
+                    console.log(res);
+                    resolve(res.lastErrorObject.n === 1);
+                }
+            });
+    });
+}
+module.exports.changePasswordQuery = changePasswordQuery;
