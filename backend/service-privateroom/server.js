@@ -24,10 +24,10 @@ app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 
 const auth = require("./auth");
 
-const Conversation = require("../service-privateroom/models/Conversation");
 const Message = require("../service-privateroom/models/Message");
 const conversationRoute = require("./routes/conversations");
 app.use("/conversations", conversationRoute);
+
 
 io.on('connection',socket => {
 
@@ -37,43 +37,37 @@ io.on('connection',socket => {
             socket.send('error','not authenticated');
         }
         else{
-            //TODO apply conversations and messages
+
+            socket.on('joinroom', function (data){
+                console.log(`${new Date()}] ${getUsername} joined the chat.`);
+                const conversationId = data.room;
+                socket.broadcast.emit(conversationId,[{
+                    username: 'Server',
+                    date: new Date(),
+                    channel: conversationId,
+                    message: `${getUsername} joined the chat.`
+                }]);
+
+                Message.find({conversationId: {$eq: conversationId}}, {'_id':0, 'username': '$sender', 'date':'$date', 'channel':'$conversationId', 'message':'$text'},{sort: {'date':1}},(err, res) => {
+                    if(err) throw err;
+                    if(res.length > 0){
+                        socket.emit(conversationId,res);
+                    }
+                    socket.emit(conversationId,[{
+                        username: 'Server',
+                        date: new Date(),
+                        channel: conversationId,
+                        message: `${getUsername} joined the chat.`
+                    }]);
+                });
+            });
+
             socket.on('privateroom',function(data){
                 console.log(`${getUsername} joined the chat.`);
                 const sender = data.sender;
-                const receiver = data.receiver;
+                const conversationId = data.room;
                 const date = data.date;
                 const message = data.message;
-
-                // get conversationId
-                let conversation = async () => {
-                    try {
-                        const result = await Conversation.find({
-                            members: {$eq: [sender, receiver]},
-                        });
-                        return result[0]["_id"];
-                    }catch (err){
-                    }
-                }
-
-                console.log('1azd',conversation);
-
-                if (conversation === null){
-                    const newConversation = new Conversation({
-                        members: [sender, receiver]
-                    });
-                    let result = async () => {
-                        try{
-                            const savedConversation = await newConversation.save();
-                            return savedConversation;
-                        }catch (err){
-                        }
-                    }
-                    conversation = result;
-                }
-                console.log('2 ac',conversation);
-                const conversationId = conversation["_id"];
-
 
                 Message.insertMany([{
                     conversationId: conversationId,
@@ -83,8 +77,14 @@ io.on('connection',socket => {
                 }
                 ]).then(function(){
                     console.log(data, "inserted");
-                    socket.broadcast.emit(conversationId,[data]);
-                    socket.emit(conversationId,[data]);
+                    const newData = {
+                        username: data.sender,
+                        date: data.date,
+                        channel: conversationId,
+                        message: data.message
+                    }
+                    socket.broadcast.emit(conversationId,[newData]);
+                    socket.emit(conversationId,[newData]);
                 }).catch(function(error){
                     console.log("error",error);
                 });
