@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="modal-header">
+    <h4 class="modal-title">Vous pouvez aussi vous enregistrer ici</h4>
+  </div>
+  <form>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="form-group mb-0">
+            <input class="form-control" type="text" required="" [(ngModel)]="login2" autocomplete="login-register" id="login-register" name="login-name-register" placeholder="login">
+            <input class="form-control" type="password" required="" [(ngModel)]="password2" autocomplete="password-register" id="password-register" name="password-name-register" placeholder="password">
+            <input class="form-control" type="password" required="" [(ngModel)]="password4" autocomplete="password2-register" id="password2-register" name="password2-name-register" placeholder="confirmation password">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input class="btn btn-sm btn-primary" name="button-register" (click)="register()" type="submit" value="S'enregistrer">
+    </div>
+  </form>
+  <br>
+  <div class="alert alert-danger" *ngIf="errorMessage!==''">{{errorMessage}}</div>
+  <div class="alert-success" *ngIf="succesMessage!==''">{{succesMessage}}</div>
+</div>

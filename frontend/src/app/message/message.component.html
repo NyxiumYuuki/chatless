@@ -1,0 +1,22 @@
+<div class="chat-container">
+    <div class="chat-header">
+      <p class="username" *ngIf="room !== 'general'">{{room}}</p>
+      <p class="username" *ngIf="room === 'general'">General</p>
+    </div>
+    <div #scrollContainer class="chat-body" >
+      <ul #ulMessages id="messages">
+      </ul>
+    </div>
+    <div class="chat-footer">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="form-group mb-0">
+            <input type="text" placeholder="Entrez votre message" (keydown.enter)="sendButtonClick()" class="form-control" [(ngModel)]="msg"/>
+          </div>
+        </div>
+        <div class="col-md-2 text-center align-self-center">
+          <button class="btn btn-primary btn-bm px-3" (click)="sendButtonClick()" id="button-send">Envoyer</button>
+        </div>
+      </div>
+    </div>
+</div>
