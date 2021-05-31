@@ -8,6 +8,3 @@ const config = {
     mongodbMessages: 'messages'
 };
 module.exports = config;
-
-
-

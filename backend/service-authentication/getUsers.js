@@ -6,7 +6,6 @@ async function getUsers (req,res) {
         return sendError(res, 'Vous n\'avez pas envoyé le champ username');
 
     const users = await queries.getUsersQuery(req.body.username);
-    console.log(users);
     if (users){
         return sendMessage(res, users);
     }

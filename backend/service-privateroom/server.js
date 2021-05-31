@@ -28,7 +28,6 @@ const Message = require("../service-privateroom/models/Message");
 const conversationRoute = require("./routes/conversations");
 app.use("/conversations", conversationRoute);
 
-
 io.on('connection',socket => {
 
     auth.getSession(socket.request, function(res){
@@ -91,7 +90,7 @@ io.on('connection',socket => {
             });
 
             socket.on("disconnect", function() {
-                console.log(`${getUsername} left the chat.`);
+                console.log(`${new Date()}] ${getUsername} left the chat.`);
             });
         }
     });

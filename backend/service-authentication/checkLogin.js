@@ -9,6 +9,7 @@ async function checkLogin (req,res) {
     
     const result = await auth.authenticate(req, res);
     if (result === 1){
+        console.log(`${new Date()}] ${req.body.login} connected.`);
         return sendMessage(res, true);
     }
     else{

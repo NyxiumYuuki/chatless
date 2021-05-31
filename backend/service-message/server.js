@@ -22,10 +22,6 @@ app.use(bodyParser.json());
 app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 app.use(cookieParser());
 
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/index.html');
-// });
-
 io.on('connection',socket => {
 
     auth.getSession(socket.request, function(res){
@@ -68,7 +64,7 @@ io.on('connection',socket => {
                     message: message
                 }
                 ]).then(function(){
-                    console.log(data, "inserted");
+                    //console.log(data, "inserted");
                     socket.broadcast.emit('general',[data]);
                     socket.emit('general',[data]);
                 }).catch(function(error){
@@ -78,14 +74,13 @@ io.on('connection',socket => {
             });
 
             socket.on("disconnect", function() {
-                console.log(`${getUsername} left the chat.`);
+                console.log(`${new Date()}] ${getUsername} left the chat.`);
                 socket.broadcast.emit('general',[{
                     username: 'Server',
                     date: new Date(),
                     channel: 'general',
                     message: `${getUsername} left the chat.`
                 }]);
-
             });
         }
     });

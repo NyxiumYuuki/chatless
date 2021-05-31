@@ -29,9 +29,4 @@ const schemaMessage = mongoose.Schema({
 
 const messages = mongoose.model(config.mongodbMessages, schemaMessage);
 
-// messages.find({},(err, messages) => {
-//     if(err) throw  err;
-//     console.log(messages);
-// });
-
 module.exports = messages;
