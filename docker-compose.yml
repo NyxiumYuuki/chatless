@@ -50,6 +50,22 @@ services:
     environment:
       NODE_ENV: development
 
+  service-privateroom:
+    container_name: service-privateroom
+    build: ./backend/service-privateroom
+    command: node server.js
+    volumes:
+      - backend/service-privateroom
+      - backend/service-privateroom/node_modules
+    ports:
+      - 3001:3000
+    depends_on:
+      - mongodb-privateroom
+    links:
+      - mongodb-privateroom
+    environment:
+      NODE_ENV: development
+
   mongodb-authentication:
     image: mongo
     container_name: mongodb-authentication
