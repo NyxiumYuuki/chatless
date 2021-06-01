@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     // console.log('Password :', this.password);
     this.auth.sendAuthentication(this.login, this.password).subscribe(data => {
       this.auth.finalizeAuthentication(data);
-      if (this.auth.islog) {
+      if (this.auth.getLogged()) {
         sessionStorage.setItem('login', this.login);
         this.router.navigateByUrl('/chat');
       } else {
