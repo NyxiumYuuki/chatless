@@ -11,7 +11,7 @@ async function register(req,res) {
     const register = await queries.register(req.body.username, req.body.password);
     if (register){
         console.log('Register : '+req.body.username);
-        return sendMessage(res, 'Succesful registration');
+        return sendMessage(res, 'Successful registration');
     }
     else{
         return sendError(res, 'Username already taken');
