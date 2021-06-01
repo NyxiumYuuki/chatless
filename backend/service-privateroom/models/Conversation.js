@@ -14,6 +14,9 @@ const ConversationSchema = new mongoose.Schema(
         owner: {
             type: String
         },
+        roomName: {
+            type: String
+        },
         members: {
             type: Array
         },
