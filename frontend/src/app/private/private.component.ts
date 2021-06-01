@@ -36,6 +36,7 @@ export class PrivateComponent implements OnInit {
   }
 
   changeListPrivate(): void{
+    this.roomSelected = '';
     this.privateRoomActivate = true;
     // @ts-ignore
     document.getElementById('userList').innerHTML = '';
@@ -57,6 +58,7 @@ export class PrivateComponent implements OnInit {
   }
 
   changeListGeneral(): void{
+    this.roomSelected = 'general';
     this.privateRoomActivate = false;
     // @ts-ignore
     document.getElementById('userList').innerHTML = '<div class="user-card"><p class="username">General</p></div>';
