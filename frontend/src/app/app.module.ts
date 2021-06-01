@@ -12,7 +12,16 @@ import { MessageComponent } from './message/message.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import {NavbarModule, WavesModule, ButtonsModule, IconsModule} from 'angular-bootstrap-md'
+import {NavbarModule, WavesModule, ButtonsModule, IconsModule} from 'angular-bootstrap-md';
+import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
+import { RemoveMemberDialogComponent } from './remove-member-dialog/remove-member-dialog.component';
+import {MatDividerModule} from "@angular/material/divider";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatSortModule} from "@angular/material/sort";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CreateRoomDialogComponent} from "./create-room-dialog/create-room-dialog.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +32,10 @@ import {NavbarModule, WavesModule, ButtonsModule, IconsModule} from 'angular-boo
     MessageComponent,
     RegisterComponent,
     ChangePasswordComponent,
-    NavbarComponent
+    NavbarComponent,
+    CreateRoomDialogComponent,
+    AddMemberDialogComponent,
+    RemoveMemberDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +48,17 @@ import {NavbarModule, WavesModule, ButtonsModule, IconsModule} from 'angular-boo
     NavbarModule,
     WavesModule,
     ButtonsModule,
-    IconsModule
+    IconsModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSortModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatDividerModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
