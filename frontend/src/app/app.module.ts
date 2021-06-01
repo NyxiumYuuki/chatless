@@ -12,7 +12,7 @@ import { MessageComponent } from './message/message.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import {NavbarModule, WavesModule, ButtonsModule, IconsModule} from 'angular-bootstrap-md'
 
 @NgModule({
   declarations: [
@@ -33,6 +33,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    NavbarModule,
+    WavesModule,
+    ButtonsModule,
+    IconsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
