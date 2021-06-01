@@ -13,10 +13,10 @@ async function changePassword (req,res) {
 
     const change = await queries.changePasswordQuery(req.body.username, req.body.password, req.body.newpassword);
     if (change){
-        return sendMessage(res, change);
+        return sendMessage(res, 'Le mot de passe a été changé.');
     }
     else{
-        return sendError(res, 'cant change');
+        return sendError(res, 'Mot de passe actuel incorrect ou erreur interne');
     }
 }
 module.exports = changePassword;
