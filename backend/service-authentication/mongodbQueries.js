@@ -18,11 +18,15 @@ function register(login, password){
     return new Promise((resolve, reject) => {
         mongoDB.collection(config.mongodbUtilisateurs).updateOne(
             {'login': login},
-            {$set: { 'login': login, 'password': password}},
+            {$setOnInsert: { 'login': login, 'password': password}},
             {upsert:true},function(err,res){
                 //console.log(res);
                 if(res !== undefined){
-                    resolve(res.upsertedCount === 1);
+                    if(typeof res.upsertedId !== 'undefined'){
+                        resolve(res.upsertedId);
+                    }else{
+                        resolve(false);
+                    }
                 }
             });
     });
