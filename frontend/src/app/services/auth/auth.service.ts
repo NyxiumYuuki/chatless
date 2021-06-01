@@ -10,9 +10,10 @@ import {environment} from "../../../environments/environment";
 export class AuthService {
 
   // @ts-ignore
-  islog: boolean;
+  private islog: boolean;
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService) {
+  }
 
   getLogged(): boolean {
     return this.islog;
