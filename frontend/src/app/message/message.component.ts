@@ -47,7 +47,7 @@ export class MessageComponent implements OnInit, OnChanges {
       this.chatservice.setRoom(this.room);
       this.chatServiceOnNewMessage(this.room);
     }
-    else{
+    else if(this.room !== ''){
       let dataMessage;
       if(this.typeRoom){
         dataMessage = {

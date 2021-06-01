@@ -2,10 +2,11 @@
     <div class="chat-header">
       <p class="username" *ngIf="room !== 'general'">{{room}}</p>
       <p class="username" *ngIf="room === 'general'">General</p>
+      <p class="username" *ngIf="room === ''">PLEASE CHOOSE A ROOM</p>
       <div class="pull-right">
-        <input *ngIf="room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="addMember()"  type="submit" value="+">
-        <input *ngIf="room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="removeMember()"  type="submit" value="-">
-        <input *ngIf="room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="listMembers()"  type="submit" value="Members">
+        <input *ngIf="room !== '' && room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="addMember()"  type="submit" value="+">
+        <input *ngIf="room !== '' && room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="removeMember()"  type="submit" value="-">
+        <input *ngIf="room !== '' && room !== 'general' && typeRoom === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="listMembers()"  type="submit" value="Members">
       </div>
     </div>
     <div #scrollContainer class="chat-body" >
