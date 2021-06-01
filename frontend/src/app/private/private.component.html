@@ -1,11 +1,11 @@
-<div class="container-fluid">
+<div class="container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
       <div #userList class="user-list-card"  (click)="selectRoom($event)">
         <div class="user-card"><p class="username">General</p></div>
       </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
       <app-message [room]="roomSelected"></app-message>
     </div>
   </div>
