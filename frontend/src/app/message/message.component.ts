@@ -49,7 +49,7 @@ export class MessageComponent implements OnInit, OnChanges {
     }
     else{
       let dataMessage;
-      if(this.typeRoom === true){
+      if(this.typeRoom){
         dataMessage = {
           member: this.username,
           roomName: this.room,
@@ -99,7 +99,7 @@ export class MessageComponent implements OnInit, OnChanges {
       for(let data of infos){
         if(data !== undefined && data.date !== undefined){
           if(data.username === 'Server'){
-            this.ulMsg.nativeElement.insertAdjacentHTML('beforeend', '<li><span class="text-danger">'+data.message+'</span></li>');
+            this.ulMsg.nativeElement.insertAdjacentHTML('beforeend', '<li><span class="text-primary">['+this.pipe.transform(data.date, 'dd/MM/yyyy HH:MM:ss')+'] </span><span class="text-danger">'+data.message+'</span></li>');
           }
           else{
             this.ulMsg.nativeElement.insertAdjacentHTML('beforeend','<li><span class="text-primary">['+this.pipe.transform(data.date, 'dd/MM/yyyy HH:MM:ss')+'] </span><span class="text-success">'+data.username+' </span>:<span class="text-secondary"> '+data.message+'</span></li>');
@@ -129,7 +129,7 @@ export class MessageComponent implements OnInit, OnChanges {
 
   addMember(){
     let dataMessage;
-    if(this.typeRoom === true){
+    if(this.typeRoom){
       dataMessage = {
         member: this.username,
         roomName: this.room,
@@ -160,7 +160,7 @@ export class MessageComponent implements OnInit, OnChanges {
 
   removeMember(){
     let dataMessage;
-    if(this.typeRoom === true){
+    if(this.typeRoom){
       dataMessage = {
         member: this.username,
         roomName: this.room,
@@ -191,7 +191,7 @@ export class MessageComponent implements OnInit, OnChanges {
 
   listMembers(){
     let dataMessage;
-    if(this.typeRoom === true){
+    if(this.typeRoom){
       dataMessage = {
         member: this.username,
         roomName: this.room,
