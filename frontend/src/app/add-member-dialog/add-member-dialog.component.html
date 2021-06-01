@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Ajouter un membre</h1>
+<mat-divider></mat-divider>
+<br>
+<div mat-dialog-content>
+  <p>Saisissez un nouveau nom d'utilisateur à ajouter à la room</p>
+  <input matInput [(ngModel)]="memberName" class="w-100">
+</div>
+<br>
+<div class="alert alert-danger w-100" *ngIf="errorMessage!==''"><span class="font-weight-bold">Erreur : </span>{{errorMessage}}</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-raised-button color="accent" class="mb-2"  (click)="onNoClick()">Fermer</button>
+  <button mat-raised-button color="primary" class="mb-2" (click)="onAddMember()" cdkFocusInitial>Ajouter le membre</button>
+</div>
