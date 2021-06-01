@@ -11,6 +11,9 @@ mongoose.connect(url,({useNewUrlParser: true, useUnifiedTopology: true})).then( 
 
 const ConversationSchema = new mongoose.Schema(
     {
+        owner: {
+            type: String
+        },
         members: {
             type: Array
         },
