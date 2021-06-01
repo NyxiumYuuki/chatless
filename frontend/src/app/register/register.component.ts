@@ -29,10 +29,11 @@ export class RegisterComponent implements OnInit {
     else {
       this.messageService.sendMessage(environment.urlCL,"register",{username: this.login2, password: this.password2}).subscribe(data => {
         if (data.status !== 'ok') {
-          console.log(data.data.reason);
+          this.succesMessage = '';
           this.errorMessage = data.data.reason;
         } else {
           //console.log(data.data);
+          this.errorMessage = '';
           this.succesMessage = data.data;
         }
       });
