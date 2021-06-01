@@ -3,7 +3,9 @@ body {
 }
 
 .container-fluid {
-  padding: 50px 200px;
+  padding-left: 5vh;
+  padding-right: 5vh;
+  padding-top: 1vh;
   overflow: hidden;
 }
 
@@ -50,7 +52,7 @@ body {
 
   .chat-header {
     height: 70px;
-    background-color: #E5E5E5;
+    background-color: steelblue;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -71,26 +73,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    height: calc(89vh - 125px);
+    height: 76vh;
     overflow-y: auto;
-
-    .message-container {
-      background-color: white;
-      padding: 7px;
-      border-radius: 5px;
-      width: fit-content;
-      max-width: 90%;
-      margin-bottom: 15px;
-    }
-
-    .same-user {
-      display: flex;
-      justify-content: flex-end;
-
-      .message-container {
-        background-color: lightskyblue;
-      }
-    }
   }
 
   .chat-footer {
@@ -100,13 +84,10 @@ body {
     right: 0;
     background-color: #EDEDED;
     padding: 10px 20px;
+    width: auto;
 
-    .form-control {
-      background-color: white;
-      border: 1px solid #D8DDEC;
-      box-sizing: border-box;
-      font-size: 1rem;
-      color: black;
+    #button {
+      size: auto;
     }
   }
 }
