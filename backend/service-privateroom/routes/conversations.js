@@ -57,7 +57,8 @@ router.post("/getRooms", async (req, res) => {
     if (typeof req.body.member === 'undefined')
         return sendError(res, 'Vous n\'avez pas envoyé le champ member');
     try {
-        const conversation = await Conversation.find({members: {$in: [req.body.member]}, owner: {$exists: true}},{});
+        const conversation = await Conversation.find({members: {$in: [req.body.member]}, roomName: {$exists: true}},{});
+        console.log(conversation);
         sendMessage(res,conversation);
     }catch (err){
         sendError(res,err);
@@ -84,7 +85,7 @@ router.post("/newRoom", async (req, res) => {
         return sendError(res, 'Vous n\'avez pas envoyé le champ roomName');
     await Conversation.updateOne(
         {roomName: req.body.roomName},
-        {$setOnInsert: {members: req.body.owner, owner: req.body.owner}},
+        {$setOnInsert: {members: req.body.owner, owner: req.body.owner, roomName: req.body.roomName}},
         {upsert:true},function(err,result){
             if(result !== undefined){
                 if(typeof result.upserted !== 'undefined'){
