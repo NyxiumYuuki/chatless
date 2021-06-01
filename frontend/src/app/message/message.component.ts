@@ -3,6 +3,9 @@ import {ChatInfo, ChatService} from "../services/chat/chat.service";
 import {DatePipe} from "@angular/common";
 import {environment} from "../../environments/environment";
 import {MessageService} from "../services/message/message.service";
+import {MatDialog} from "@angular/material/dialog";
+import {AddMemberDialogComponent} from "../add-member-dialog/add-member-dialog.component";
+import {RemoveMemberDialogComponent} from "../remove-member-dialog/remove-member-dialog.component";
 
 @Component({
   selector: 'app-message',
@@ -19,12 +22,15 @@ export class MessageComponent implements OnInit, OnChanges {
   @Input() room: string;
 
   // @ts-ignore
+  @Input() typeRoom: boolean;
+
+  // @ts-ignore
   @ViewChild('ulMessages') ulMsg: ElementRef;
 
   // @ts-ignore
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
 
-  constructor(private chatservice: ChatService, private pipe: DatePipe, private messageservice: MessageService) {
+  constructor(private chatservice: ChatService, private pipe: DatePipe, private messageservice: MessageService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,11 +48,21 @@ export class MessageComponent implements OnInit, OnChanges {
       this.chatServiceOnNewMessage(this.room);
     }
     else{
+      let dataMessage;
+      if(this.typeRoom === true){
+        dataMessage = {
+          member: this.username,
+          roomName: this.room,
+        }
+      }
+      else{
+        dataMessage = {
+          sender: this.username,
+          receiver: this.room,
+        }
+      }
       this.chatservice.setUrl(environment.urlCPR);
-      this.messageservice.sendMessage(environment.urlCPR,"conversations/getConv",{
-        sender: this.username,
-        receiver: this.room,
-      }).subscribe(data => {
+      this.messageservice.sendMessage(environment.urlCPR,"conversations/getConv",dataMessage).subscribe(data => {
         if (data.status !== 'ok') {
           console.log(data.data.reason);
         } else {
@@ -109,5 +125,100 @@ export class MessageComponent implements OnInit, OnChanges {
       }
       this.msg = '';
     }
+  }
+
+  addMember(){
+    let dataMessage;
+    if(this.typeRoom === true){
+      dataMessage = {
+        member: this.username,
+        roomName: this.room,
+      }
+    }
+    else{
+      dataMessage = {
+        sender: this.username,
+        receiver: this.room,
+      }
+    }
+    this.messageservice.sendMessage(environment.urlCPR, "conversations/getConv", dataMessage).subscribe(data => {
+      if (data.status !== 'ok') {
+        console.log(data.data.reason);
+      } else {
+        this.roomId = data.data._id;
+        const dialogRef = this.dialog.open(AddMemberDialogComponent, {
+          width: '50%',
+          data: {owner: this.username, conversationid: this.roomId}
+        });
+        dialogRef.afterClosed().subscribe(data2 => {
+          console.log(data2);
+          this.listMembers();
+        });
+      }
+    });
+  }
+
+  removeMember(){
+    let dataMessage;
+    if(this.typeRoom === true){
+      dataMessage = {
+        member: this.username,
+        roomName: this.room,
+      }
+    }
+    else{
+      dataMessage = {
+        sender: this.username,
+        receiver: this.room,
+      }
+    }
+    this.messageservice.sendMessage(environment.urlCPR, "conversations/getConv", dataMessage).subscribe(data => {
+      if (data.status !== 'ok') {
+        console.log(data.data.reason);
+      } else {
+        this.roomId = data.data._id;
+        const dialogRef = this.dialog.open(RemoveMemberDialogComponent, {
+          width: '50%',
+          data: {owner: this.username, conversationid: this.roomId}
+        });
+        dialogRef.afterClosed().subscribe(data2 => {
+          console.log(data2);
+          this.listMembers();
+        });
+      }
+    });
+  }
+
+  listMembers(){
+    let dataMessage;
+    if(this.typeRoom === true){
+      dataMessage = {
+        member: this.username,
+        roomName: this.room,
+      }
+    }
+    else{
+      dataMessage = {
+        sender: this.username,
+        receiver: this.room,
+      }
+    }
+    this.messageservice.sendMessage(environment.urlCPR, "conversations/getConv", dataMessage).subscribe(data => {
+      if (data.status !== 'ok') {
+        console.log(data.data.reason);
+      } else {
+        this.roomId = data.data._id;
+        this.messageservice.sendMessage(environment.urlCPR, "conversations/getMembers", {conversationid: this.roomId}).subscribe(data2 => {
+          if (data2.status !== 'ok') {
+            console.log(data2.data.reason);
+          } else {
+            if(typeof data2.data[0] !== 'undefined'){
+              this.ulMsg.nativeElement.insertAdjacentHTML('beforeend', '<li><span class="text-danger">Membres: '+data2.data[0].members+'</span></li>');
+            }
+          }
+        });
+      }
+    });
+
   }
 }
