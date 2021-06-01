@@ -58,7 +58,7 @@ services:
       - backend/service-privateroom
       - backend/service-privateroom/node_modules
     ports:
-      - 3001:3000
+      - 3002:3000
     depends_on:
       - mongodb-privateroom
     links:
