@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-  <a class="navbar-brand" href="#">Chat Polytech</a>
+  <a class="navbar-brand" href="/chat">Chat Polytech</a>
 
-  <ul class="navbar-nav ml-auto">
+  <ul class="navbar-nav ml-auto" *ngIf="true;">
     <!-- Dropdown -->
     <li class="nav-item dropdown" dropdown>
       <a role="button" data-toggle="dropdown" type="button" class="nav-link dropdown-toggle ">Profile</a>
       <div class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-        <a class="dropdown-item waves-light" href="#">Change password</a>
+        <a class="dropdown-item waves-light" href="changePassword">Change password</a>
 <!--        <div class="divider dropdown-divider"></div>-->
-        <a class="dropdown-item waves-light" href="#">Log out</a>
+        <a class="dropdown-item waves-light" href="#" (click)="logout()">Log out</a>
       </div>
     </li>
   </ul>
