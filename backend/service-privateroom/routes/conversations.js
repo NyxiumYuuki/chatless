@@ -110,7 +110,6 @@ router.post("/addRoomMember", async (req, res) => {
     if(req.body.member === req.body.owner){
         return sendError(res, 'Impossible de vous ajouter vous même');
     }
-    // TODO display errer when member (not host) try to add
     try{
         await Conversation.updateOne(
             {_id: req.body.conversationid, owner: req.body.owner},
@@ -123,7 +122,7 @@ router.post("/addRoomMember", async (req, res) => {
                         sendMessage(res,req.body.member+' added');
                     }
                     else{
-                        sendError(res,err);
+                        sendError(res,'Seul le propriétaire de la room peut ajouter des membres.');
                     }
                 }
                 else{
@@ -147,8 +146,6 @@ router.post("/removeRoomMember", async (req, res) => {
     if(req.body.member === req.body.owner){
         return sendError(res, 'Impossible de vous enlever vous même');
     }
-    // TODO display errer when member (not host) try to remove
-
     try{
         await Conversation.updateOne(
             {_id: req.body.conversationid, owner: req.body.owner},
@@ -161,7 +158,7 @@ router.post("/removeRoomMember", async (req, res) => {
                         sendMessage(res,req.body.member+' removed');
                     }
                     else{
-                        sendError(res,err);
+                        sendError(res,'Seul le propriétaire de la room peut retirer des membres.');
                     }
                 }
                 else{
