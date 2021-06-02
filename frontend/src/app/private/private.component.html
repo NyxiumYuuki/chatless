@@ -1,16 +1,23 @@
 <div class="container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
   <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
-      <input *ngIf="privateRoomActivate === false" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListPrivate()"  type="submit" value="Private Room">
-      <input *ngIf="privateRoomActivate === false" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListGeneral()"  type="submit" value="Actualiser">
-      <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListGeneral()"  type="submit" value="Home Room">
-      <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="newRoom()"  type="submit" value="New Room">
-      <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListPrivate()"  type="submit" value="Actualiser">
+      <br>
+      <div class="btn-group">
+        <input *ngIf="privateRoomActivate === false" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListPrivate()"  type="submit" value="Private Room">
+        <input *ngIf="privateRoomActivate === false" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListGeneral()"  type="submit" value="Actualiser">
+        <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListGeneral()"  type="submit" value="Home Room">
+        <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="newRoom()"  type="submit" value="New Room">
+        <input *ngIf="privateRoomActivate === true" class="btn btn-sm btn-primary" name="button-change-private" (click)="changeListPrivate()"  type="submit" value="Actualiser">
+      </div>
       <div #userList class="user-list-card" id="userList" (click)="selectRoom($event)">
-        <div class="user-card"><p class="username">General</p></div>
+        <div class="user-card">
+          <img src="./assets/image/group.png" height="25" width="25"/>
+          <p class="username">General</p>
+        </div>
       </div>
     </div>
     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+      <br>
       <app-message [room]="roomSelected" [typeRoom]="privateRoomActivate"></app-message>
     </div>
   </div>
