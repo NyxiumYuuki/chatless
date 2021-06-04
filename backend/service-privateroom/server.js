@@ -24,9 +24,50 @@ app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 
 const auth = require("./auth");
 
-const Message = require("../service-privateroom/models/Message");
+const Message = require("./models/Message");
 const conversationRoute = require("./routes/conversations");
 app.use("/conversations", conversationRoute);
+
+const Conversation = require("./models/Conversation");
+Conversation.updateOne(
+    {roomName: 'Demonstration Room'},
+    {$setOnInsert: {members: ['cloud','yuki','wilfried','khai'], owner: 'cloud', roomName: 'Demonstration Room'}},
+    {upsert:true},function(err,result){
+        if(result !== undefined){
+            if(typeof result.upserted !== 'undefined'){
+                Message.insertMany([
+                    {
+                        conversationId: result.upserted[0]._id,
+                        sender: 'yuki',
+                        text: 'Message à des fins de démonstration pour private room de Yûki',
+                        date: new Date()
+                    },
+                    {
+                        conversationId: result.upserted[0]._id,
+                        sender: 'wilfried',
+                        text: 'Message à des fins de démonstration pour private room de Wilfried',
+                        date: new Date()
+                    },
+                    {
+                        conversationId: result.upserted[0]._id,
+                        sender: 'khai',
+                        text: 'Message à des fins de démonstration pour private room de Khai',
+                        date: new Date()
+                    },
+                    {
+                        conversationId: result.upserted[0]._id,
+                        sender: 'cloud',
+                        text: 'Message à des fins de démonstration pour private room de Cloud',
+                        date: new Date()
+                    },
+                    ]);
+            }else{
+                console.log('Room already exist');
+            }
+        }else{
+            console.log(err);
+        }
+    });
 
 io.on('connection',socket => {
 

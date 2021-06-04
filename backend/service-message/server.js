@@ -22,6 +22,34 @@ app.use(bodyParser.json());
 app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 app.use(cookieParser());
 
+
+messages.insertMany([
+    {
+        username: 'yuki',
+        date: new Date(),
+        channel: 'general',
+        message: 'Ceci est un message de test de la part de Yûki'
+    },
+    {
+        username: 'wilfried',
+        date: new Date(),
+        channel: 'general',
+        message: 'Ceci est un message de test de la part de Wilfried'
+    },
+    {
+        username: 'khai',
+        date: new Date(),
+        channel: 'general',
+        message: 'Ceci est un message de test de la part de Khai'
+    },
+    {
+        username: 'cloud',
+        date: new Date(),
+        channel: 'general',
+        message: 'Ceci est un message à des fins de démonstration'
+    },
+]);
+
 io.on('connection',socket => {
 
     auth.getSession(socket.request, function(res){

@@ -27,6 +27,7 @@ mongoConnect.connectToServer(function( err, client ) {
     queries.register('khai','test');
     queries.register('wilfried','test');
     queries.register('yuki','test');
+    queries.register('cloud','computing');
 
     app.post('/verify:token', (req, res) => {
         if(typeof req.body !== 'undefined'){
