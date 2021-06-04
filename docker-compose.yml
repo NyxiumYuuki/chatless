@@ -32,7 +32,7 @@ services:
     links:
       - mongodb-authentication
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
 
   service-message:
     container_name: service-message
@@ -48,7 +48,7 @@ services:
     links:
       - mongodb-message
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
 
   service-privateroom:
     container_name: service-privateroom
@@ -64,7 +64,7 @@ services:
     links:
       - mongodb-privateroom
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
 
   mongodb-authentication:
     image: mongo
