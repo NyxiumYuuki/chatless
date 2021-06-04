@@ -52,7 +52,7 @@ mongoConnect.connectToServer(function( err, client ) {
         changePassword(req,res);
     });
 
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0',() => {
         console.log (`listening on port ${port}`);
     });
 });
