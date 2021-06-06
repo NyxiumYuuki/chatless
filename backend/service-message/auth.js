@@ -4,10 +4,10 @@ function getSession (req, callback) {
     if(typeof req.headers.cookie !== 'undefined'){
         request.post({
             headers: {'content-type' : 'application/x-www-form-urlencoded'},
-            url: 'http://127.0.0.1:3000/verify:token',
+            url: 'http://service-authentication:3000/verify:token',
             body: 'sessionid='+req.headers.cookie.replace('SESSIONID=','')
         },function (error, response, body) {
-            console.log("body ; getSession auth message :",body);
+            //console.log("body ; getSession auth message :",body);
             if(typeof body !== 'undefined'){
                 const bodyJson = JSON.parse(body);
                 if (bodyJson && bodyJson.status && bodyJson.data) {
