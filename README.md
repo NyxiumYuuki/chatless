@@ -3,9 +3,12 @@
 **Instruction de lancement du Chat**
 - `docker compose up`
 - Puis se connecter en local sur `http://localhost:4200`
-- Le client ne se connecte pas pour l'instant. Mais le serveur démarre enfin, problème entre toutes les images docker, 
-  seul l'image des bases de données MongoDB et l'image du service-authentication marche. Les deux autres services 
-  ne marchent pas en image docker à cause du socket pour je ne sais quelle raison.
+- Identifiants de connexion disponible :
+  - Username : cloud | Password : computing
+  - Username : wilfried | Password : test
+  - Username : yuki | Password : test
+  - Username : khai | Password : test
+- Pour avoir un autre utilisateur connecté, il faut absolument avoir soit un autre navigateur soit un autre onglet en navigateur privé (pour cause d'identifiant de session)
 
 Pour lancer le projet sans image docker, il est obligatoire de lancer plusieurs terminals pour le frontend et pour chaque 
 serveurs et avoir des images dockers mongodb.
@@ -15,8 +18,6 @@ A savoir:
 - Terminal service-message dans le dossier service-message : `node server.js`
 - Terminal service-privateroom dans le dossier service-privateroom : `node server.js`
 - Puis se connecter en local sur `http://localhost:4200`
-
-
 
 
 
