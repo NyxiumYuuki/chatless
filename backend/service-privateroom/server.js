@@ -74,6 +74,7 @@ io.on('connection',socket => {
     auth.getSession(socket.request, function(res){
         const getUsername = auth.getUsername(res);
         if (getUsername === -1) {
+            console.log('not authenticated',getUsername);
             socket.send('error','not authenticated');
         }
         else{
