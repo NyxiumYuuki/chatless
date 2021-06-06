@@ -61,7 +61,7 @@ export class PrivateComponent implements OnInit {
     this.roomSelected = 'general';
     this.privateRoomActivate = false;
     // @ts-ignore
-    document.getElementById('userList').innerHTML = '<div class="user-card"><p class="username">General</p></div>';
+    document.getElementById('userList').innerHTML = '<div class="user-card"><img src="../../assets/image/group.png" height="25" width="25"/><p class="username">General</p></div>';
     this.messageservice.sendMessage(environment.urlCL,'getUsers', {username: this.username}).subscribe(
       data => {
         if (data.status !== 'ok'){
