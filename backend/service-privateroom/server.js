@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://127.0.0.1:4200",
+        origin: "http://localhost:4200",
         methods: ["GET", "POST"],
         credentials: true
     }
@@ -20,7 +20,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 const cors = require('cors');
-app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
+app.use(cors({origin: 'http://localhost:4200', credentials: true}));
 
 const auth = require("./auth");
 

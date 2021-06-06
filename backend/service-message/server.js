@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-    origin: "http://127.0.0.1:4200",
+    origin: "http://localhost:4200",
     methods: ["GET", "POST"],
     credentials: true
     }
@@ -19,7 +19,7 @@ const io = new Server(server, {
 const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
-app.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
+app.use(cors({origin: 'http://localhost:4200', credentials: true}));
 app.use(cookieParser());
 
 
@@ -114,6 +114,6 @@ io.on('connection',socket => {
     });
 });
 
-server.listen(port, '0.0.0.0',() => {
+server.listen(port,'0.0.0.0', () => {
     console.log (`listening on port ${port}`);
 });

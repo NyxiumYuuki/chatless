@@ -7,13 +7,19 @@ function getSession (req, callback) {
             url: 'http://127.0.0.1:3000/verify:token',
             body: 'sessionid='+req.headers.cookie.replace('SESSIONID=','')
         },function (error, response, body) {
-            const bodyJson = JSON.parse(body);
-            if (bodyJson && bodyJson.status && bodyJson.data) {
-                if (bodyJson.status === 'ok') {
-                    return callback(bodyJson.data.token);
-                } else {
-                    return callback(bodyJson.data.reason);
+            console.log("body ; getSession auth message :",body);
+            if(typeof body !== 'undefined'){
+                const bodyJson = JSON.parse(body);
+                if (bodyJson && bodyJson.status && bodyJson.data) {
+                    if (bodyJson.status === 'ok') {
+                        return callback(bodyJson.data.token);
+                    } else {
+                        return callback(bodyJson.data.reason);
+                    }
                 }
+            }
+            else{
+                return callback('Error');
             }
         });
     }

@@ -1,5 +1,26 @@
 **Projet Chat**
 
+**Instruction de lancement du Chat**
+- `docker compose up`
+- Puis se connecter en local sur `http://localhost:4200`
+- Le client ne se connecte pas pour l'instant. Mais le serveur démarre enfin, problème entre toutes les images docker, 
+  seul l'image des bases de données MongoDB et l'image du service-authentication marche. Les deux autres services 
+  ne marchent pas en image docker à cause du socket pour je ne sais quelle raison.
+
+Pour lancer le projet sans image docker, il est obligatoire de lancer plusieurs terminals pour le frontend et pour chaque 
+serveurs et avoir des images dockers mongodb.
+A savoir:
+- Terminal Frontend dans le dossier frontend : `ng serve`
+- Terminal service-authentication dans le dossier service-authentication : `node server.js`
+- Terminal service-message dans le dossier service-message : `node server.js`
+- Terminal service-privateroom dans le dossier service-privateroom : `node server.js`
+- Puis se connecter en local sur `http://localhost:4200`
+
+
+
+
+
+**Instruction du professeur**
 Le but du projet est de fournir un service de chat rudimentaire :
 -  Une interface utilisateur en web
 - Les utilisateurs peuvent s'enregistrer/se connecter/se déconnecter/changer leur mot de passe
